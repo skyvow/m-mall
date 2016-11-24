@@ -13,7 +13,7 @@
 ## 目录结构：
 
 - assets — 存放静态文件，例如：images、styles、plugins
-- etc — 存放配置文件，例如：config.js，配置路径 https://www.skyvow.cn，便可体验小程序
+- etc — 存放配置文件，例如：config.js，配置BASE路径为 https://www.skyvow.cn
 - helpers — 存放帮助文件，例如：Promise封装wx.request
 - pages — 存放项目页面相关文件
 

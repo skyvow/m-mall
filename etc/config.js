@@ -1,4 +1,4 @@
 export default {
-	basePath: 'http://localhost:3000/api', 
-	fileBasePath: 'http://localhost:3000/', 
+	basePath: 'https://www.skyvow.cn/api', 
+	fileBasePath: 'https://www.skyvow.cn/', 
 }
