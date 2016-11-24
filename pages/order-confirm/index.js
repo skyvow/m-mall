@@ -8,7 +8,7 @@ Page({
             item: {},
         }
     },
-    onLoad: function(option) {
+    onLoad(option) {
         console.log(option)
     	if (option.id) {
             this.setData({
@@ -28,11 +28,11 @@ Page({
         })
         console.log(this.data.carts)
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/address-confirm/index')
     },
-    getDefalutAddress: function() {
+    getDefalutAddress() {
         App.HttpService.getDefalutAddress()
         .then(data => {
             console.log(data)
@@ -46,7 +46,7 @@ Page({
             }
         })
     },
-    showModal: function() {
+    showModal() {
         App.WxService.showModal({
             title: '友情提示', 
             content: '没有收货地址，请先设置', 
@@ -60,7 +60,7 @@ Page({
             }
         })
     },
-    getAddressDetail: function(id) {
+    getAddressDetail(id) {
         App.HttpService.getAddressDetail(id)
         .then(data => {
             console.log(data)
@@ -71,7 +71,7 @@ Page({
             }
         })
     },
-    addOrder: function() {
+    addOrder() {
         const items = this.data.carts.items.map(n => n._id)
         const address_id = this.data.address_id
         const params = {
@@ -88,5 +88,11 @@ Page({
             }
         })
         console.log(items)
+    },
+    clear() {
+        App.HttpService.clearCartByUser()
+        .then(data => {
+            console.log(data)
+        })
     },
 })

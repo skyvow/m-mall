@@ -12,19 +12,19 @@ Page({
             paginate: {}
         }
     },
-    onLoad: function(option) {
+    onLoad(option) {
         this.setData({
             'goods.params.type': option.type
         })
         this.getGoods()
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/goods-detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    getGoods: function() {
+    getGoods() {
         const goods = this.data.goods
         const params = goods.params
 
@@ -51,7 +51,7 @@ Page({
             })
         })
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh() {
         const type = this.data.goods.params.type    
         const goods = {
             items: [],
@@ -69,10 +69,10 @@ Page({
 
         this.getGoods()
     },
-    onReachBottom: function () {
+    onReachBottom() {
         this.lower()
     },
-    lower: function() {
+    lower() {
         if (!this.data.goods.paginate.hasNext) return
         this.getGoods()
     },

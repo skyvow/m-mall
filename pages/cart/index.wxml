@@ -29,4 +29,5 @@
 
 <view class="button-sp-area">
     <button class="weui-btn" type="primary" bindtap="confirmOrder">去结算</button>
+    <button class="weui-btn" type="warn" bindtap="clear">清空</button>
 </view>

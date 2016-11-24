@@ -12,16 +12,16 @@ Page({
             paginate: {}
         }
     },
-    onLoad: function() {
+    onLoad() {
         this.getOrderList()
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/order-detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    getOrderList: function() {
+    getOrderList() {
         const order = this.data.order
         const params = order.params
 
@@ -53,7 +53,7 @@ Page({
             })
         })
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh() {
         const order = {
             items: [],
             params: {
@@ -69,10 +69,10 @@ Page({
 
         this.getOrderList()
     },
-    onReachBottom: function () {
+    onReachBottom() {
         this.lower()
     },
-    lower: function() {
+    lower() {
         if (!this.data.order.paginate.hasNext) return
         this.getOrderList()
     },

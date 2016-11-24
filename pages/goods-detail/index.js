@@ -11,14 +11,14 @@ Page({
             item: {}
         }
     },
-    swiperchange: function(e) {
+    swiperchange(e) {
         // console.log(e.detail.current)
     },
-    onLoad: function(option) {
+    onLoad(option) {
         console.log(option)
         this.getDetail(option.id)
     },
-    addCart: function(e) {
+    addCart(e) {
         const goods = this.data.goodss.item._id
         App.HttpService.addCartByUser(goods)
         .then(data => {
@@ -28,14 +28,14 @@ Page({
             }
         })
     },
-    showToast: function(message) {
+    showToast(message) {
         App.WxService.showToast({
             title   : message, 
             icon    : 'success', 
             duration: 1500, 
         })
     },
-    getDetail: function(id) {
+    getDetail(id) {
     	App.HttpService.getDetail(id)
         .then(data => {
         	console.log(data)

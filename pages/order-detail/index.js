@@ -6,13 +6,13 @@ Page({
             item: {},
         },
     },
-    onLoad: function(option) {
+    onLoad(option) {
         this.setData({
             id: option.id
         })
         this.getOrderDetail()
     },
-    getOrderDetail: function() {
+    getOrderDetail() {
         App.HttpService.getOrderDetail(this.data.id)
         .then(data => {
             console.log(data)

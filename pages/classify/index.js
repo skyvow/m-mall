@@ -12,16 +12,16 @@ Page({
             paginate: {}
         },
     },
-    onLoad: function() {
+    onLoad() {
     	this.getClassify()       
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/goods/index', {
             type: e.currentTarget.dataset.id
         })
     },
-    getClassify: function() {
+    getClassify() {
         const classify = this.data.classify
         const params = classify.params
 
@@ -47,7 +47,7 @@ Page({
             })
         })
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh() {
         const classify = {
             items: [],
             params: {
@@ -63,10 +63,10 @@ Page({
 
         this.getClassify()
     },
-    onReachBottom: function () {
+    onReachBottom() {
         this.lower()
     },
-    lower: function() {
+    lower() {
         if (!this.data.classify.paginate.hasNext) return
         this.getClassify()
     },

@@ -22,13 +22,13 @@ Page({
             },
         ],
     },
-    onLoad: function(option) {
+    onLoad(option) {
     	this.renderForm(option.id)
     	this.setData({
     		id: option.id
     	})
     },
-    renderForm: function(id) {
+    renderForm(id) {
     	App.HttpService.getAddressDetail(id)
 		.then(data => {
 			console.log(data)
@@ -52,7 +52,7 @@ Page({
 			}
 		})
     },
-    radioChange: function(e) {
+    radioChange(e) {
 		console.log('radio发生change事件，携带value值为：', e.detail.value)
 		const value = e.detail.value
 		const radio = this.data.radio
@@ -62,20 +62,20 @@ Page({
 			'form.gender': value, 
 		})
 	},
-	switchChange: function (e){
+	switchChange(e) {
 		console.log('switch 发生 change 事件，携带值为', e.detail.value)
 		this.setData({
 			'form.is_def': e.detail.value, 
 		})
 	},
-	bindKeyInput: function(e) {
+	bindKeyInput(e) {
 		const model  = e.currentTarget.dataset.model
 		const value  = e.detail.value
 		const params = {}
 		params[model] = value
 		this.setData(params)
 	},
-	submitForm: function() {
+	submitForm() {
 		const id = this.data.id
 		const params = this.data.form
 		console.log(params)
@@ -87,7 +87,7 @@ Page({
 			}
 		})
 	},
-	delete: function() {
+	delete() {
 		App.HttpService.deleteAddress(this.data.id)
 		.then(data => {
 			console.log(data)
@@ -96,7 +96,7 @@ Page({
 			}
 		})
 	},
-	showToast: function(message) {
+	showToast(message) {
 		App.WxService.showToast({
 			title   : message, 
 			icon    : 'success', 

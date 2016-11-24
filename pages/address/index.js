@@ -12,20 +12,20 @@ Page({
             paginate: {}
         }
     },
-    onLoad: function() {
+    onLoad() {
     	this.getAddressList()
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/address-edit/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    redirectToAddress: function(e) {
+    redirectToAddress(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/address-add/index')
     },
-    setDefalutAddress: function(e) {
+    setDefalutAddress(e) {
         const id = e.currentTarget.dataset.id
         App.HttpService.setDefalutAddress(id)
         .then(data => {
@@ -35,7 +35,7 @@ Page({
             }
         })
     },
-    getAddressList: function() {
+    getAddressList() {
         const address = this.data.address
         const params = address.params
 
@@ -61,7 +61,7 @@ Page({
             })
         })
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh() {
         const address = {
             items: [],
             params: {
@@ -77,10 +77,10 @@ Page({
 
         this.getAddressList()
     },
-    onReachBottom: function () {
+    onReachBottom() {
         this.lower()
     },
-    lower: function() {
+    lower() {
         if (!this.data.address.paginate.hasNext) return
         this.getAddressList()
     },

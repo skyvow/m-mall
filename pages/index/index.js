@@ -19,20 +19,20 @@ Page({
             paginate: {}
         }
     },
-    swiperchange: function(e) {
+    swiperchange(e) {
         // console.log(e.detail.current)
     },
-    onLoad: function() {
+    onLoad() {
         this.getBanners()
         this.getClassify()
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/goods-detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    getBanners: function() {
+    getBanners() {
     	App.HttpService.getBanners()
         .then(data => {
         	console.log(data)
@@ -44,7 +44,7 @@ Page({
         	}
         })
     },
-    getClassify: function() {
+    getClassify() {
         App.HttpService.getClassify({
             page: 1, 
             limit: 4, 
@@ -60,7 +60,7 @@ Page({
             }
         })
     },
-    getGoods: function() {
+    getGoods() {
         const goods = this.data.goods
         const params = goods.params
 
@@ -87,7 +87,7 @@ Page({
             })
         })
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh() {
         const type = this.data.goods.params.type    
         const goods = {
             items: [],
@@ -105,14 +105,14 @@ Page({
 
         this.getGoods()
     },
-    onReachBottom: function () {
+    onReachBottom() {
         this.lower()
     },
-    lower: function() {
+    lower() {
         if (!this.data.goods.paginate.hasNext) return
         this.getGoods()
     },
-    onTapTag: function(e) {
+    onTapTag(e) {
         const type = e.currentTarget.dataset.type
         const index = e.currentTarget.dataset.index
         const goods = {

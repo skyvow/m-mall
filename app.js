@@ -4,7 +4,7 @@ import Tools from 'helpers/tools'
 import Config from 'etc/config'
 
 App({
-	onLaunch: function () {
+	onLaunch() {
 		console.log('onLaunch')
 		if (this.WxService.getStorageSync('token')) return
 		this.HttpService.signIn({
@@ -18,13 +18,13 @@ App({
 			}
 		})
 	},
-	onShow: function() {
+	onShow() {
 		console.log('onShow')
 	},
-	onHide: function() {
+	onHide() {
 		console.log('onHide')
 	},
-	getUserInfo: function() {
+	getUserInfo() {
 		return this.WxService.login()
 		.then(data => {
 			console.log(data)
@@ -39,7 +39,7 @@ App({
 	globalData: {
 		userInfo: null
 	},
-	renderImage: function(path) {
+	renderImage(path) {
         if (!path) return ''
         if (path.indexOf('http') !== -1) return path
         return `${this.Config.fileBasePath}${path}`

@@ -6,10 +6,10 @@ Page({
             items: []
         }
     },
-    onLoad: function() {
+    onLoad() {
         this.getCarts()
     },
-    getCarts: function() {
+    getCarts() {
         App.HttpService.getCartByUser()
         .then(data => {
             console.log(data)
@@ -21,18 +21,27 @@ Page({
             }
         })
     },
-    onPullDownRefresh: function() {
+    onPullDownRefresh() {
         this.getCarts()
     },
-    navigateTo: function(e) {
+    navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/goods-detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    confirmOrder: function(e) {
+    confirmOrder(e) {
         console.log(e)
         App.WxService.setStorageSync('confirmOrder', this.data.carts.items)
         App.WxService.navigateTo('/pages/order-confirm/index')
     },
+    clear() {
+        App.HttpService.clearCartByUser()
+        .then(data => {
+            console.log(data)
+            if (data.meta.code == 0) {
+                this.getCarts()
+            }
+        })
+    }
 })

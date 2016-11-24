@@ -49,6 +49,10 @@ class Service extends ServiceBase {
 		return this.deleteRequest(`${this.$$path.goods}/${id}`)
 	}
 
+	clearCartByUser() {
+		return this.postRequest(`${this.$$path.cart}/clear`)
+	}
+
 	getAddressList(params) {
 		return this.getRequest(this.$$path.address, params)
 	}

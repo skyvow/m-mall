@@ -24,7 +24,7 @@ Page({
 			},
 		],
 	},
-	onLoad: function() {
+	onLoad() {
 		const that = this
 		const userInfo = App.globalData.userInfo
 
@@ -43,7 +43,7 @@ Page({
 			})
 		})
 	},
-	navigateTo: function(e) {
+	navigateTo(e) {
         console.log(e)
         App.WxService.navigateTo(e.currentTarget.dataset.path)
     },
