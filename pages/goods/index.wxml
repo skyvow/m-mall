@@ -1,0 +1,5 @@
+<import src="../common/list.wxml"/>
+
+<view class="container">
+    <template is="list" data="{{ goods, hidden }}"/>
+</view>

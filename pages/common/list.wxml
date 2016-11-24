@@ -1,0 +1,25 @@
+<template name="list">
+	<scroll-view class="scroll-list" scroll-y="true" style="height: 100%" bindscrolltolower="lower">
+		<view class="weui-panel weui-panel_access" wx:if="{{ !!goods.paginate.total }}">
+            <view class="weui-panel__bd">
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{ goods.items }}" wx:key="" bindtap="navigateTo" data-id="{{ item._id }}">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{ item.thumb_url }}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{ item.name }}</view>
+                        <view class="weui-media-box__desc">
+                            <text class="text-orangered">¥ {{ item.price }}</text>
+                        </view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+        <loading hidden="{{ hidden }}">
+	        加载中...
+	    </loading>
+	    <view class="weui-loadmore weui-loadmore_line" wx:if="{{ !goods.paginate.total }}">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多数据了</view>
+        </view>
+	</scroll-view>
+</template>
