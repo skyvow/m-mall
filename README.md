@@ -4,7 +4,8 @@
 
 微信小程序：实现一个移动端小商城，项目持续更新中...
 
-开发技术：**Weui.wxss** 、 **ES6**
+前台：**Weui.wxss** 、 **ES6**
+后台：[m-mall-admin](http://skyvow.github.io/m-mall-admin/)
 
 ## 目录结构：
 
