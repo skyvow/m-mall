@@ -1,16 +1,16 @@
 <view class="container">
     <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" vertical="{{ vertical }}"
             autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}">
-        <block wx:for="{{ goodss.item.images }}" wx:key="">
+        <block wx:for="{{ goods.item.images }}" wx:key="">
             <swiper-item>
                 <image src="{{ item.path }}" class="slide-image"/>
             </swiper-item>
         </block>
     </swiper>
     <view class="shopping_container">
-        <view class="name">{{ goodss.item.name }}</view>
-        <view class="price">¥ {{ goodss.item.price }}</view>
-        <text class="remark">{{ goodss.item.remark }}</text>
+        <view class="name">{{ goods.item.name }}</view>
+        <view class="price">¥ {{ goods.item.price }}</view>
+        <text class="remark">{{ goods.item.remark }}</text>
     </view>
     <view class="btn-plus" bindtap="addCart">
         <image class="icon" src="../../assets/images/iconfont-plus-circle.png" />

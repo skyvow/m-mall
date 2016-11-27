@@ -3,25 +3,32 @@ const App = getApp()
 Page({
     data: {
         hidden: !0,
-        address: {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
+        address: {}
     },
     onLoad() {
-    	this.getAddressList()
     },
-    navigateTo(e) {
+    onShow() {
+        this.onPullDownRefresh()
+    },
+    initData() {
+        this.setData({
+            address: {
+                items: [],
+                params: {
+                    page : 1,
+                    limit: 10,
+                },
+                paginate: {}
+            }
+        })
+    },
+    toAddressEdit(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/address-edit/index', {
             id: e.currentTarget.dataset.id
         })
     },
-    redirectToAddress(e) {
+    toAddressAdd(e) {
         console.log(e)
         App.WxService.navigateTo('/pages/address-add/index')
     },
@@ -62,19 +69,7 @@ Page({
         })
     },
     onPullDownRefresh() {
-        const address = {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
-
-        this.setData({
-            address: address
-        })
-
+        this.initData()
         this.getAddressList()
     },
     onReachBottom() {

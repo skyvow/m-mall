@@ -10,27 +10,36 @@ Page({
     },
     onLoad(option) {
         console.log(option)
-    	if (option.id) {
-            this.setData({
-                address_id: option.id
-            })
-            this.getAddressDetail(option.id)
-        } else {
-            this.getDefalutAddress()
-        }
+        this.setData({
+            address_id: option.id
+        })
+
         const carts = {
             items: App.WxService.getStorageSync('confirmOrder'), 
             totalAmount: 0, 
         }
+
         carts.items.forEach(n => carts.totalAmount+=n.totalAmount)
+        
         this.setData({
             carts: carts
         })
+
         console.log(this.data.carts)
     },
-    navigateTo(e) {
+    onShow() {
+        const address_id = this.data.address_id
+        if (address_id) {
+            this.getAddressDetail(address_id)
+        } else {
+            this.getDefalutAddress()
+        }
+    },
+    redirectTo(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/address-confirm/index')
+        App.WxService.redirectTo('/pages/address-confirm/index', {
+            ret: this.data.address_id
+        })
     },
     getDefalutAddress() {
         App.HttpService.getDefalutAddress()

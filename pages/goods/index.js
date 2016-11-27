@@ -3,20 +3,31 @@ const App = getApp()
 Page({
     data: {
         hidden: !0,
-        goods: {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
+        type  : null,
+        goods : {},
     },
     onLoad(option) {
         this.setData({
-            'goods.params.type': option.type
+            type: option.type
         })
-        this.getGoods()
+    },
+    onShow() {
+        this.onPullDownRefresh()
+    },
+    initData() {
+        const type = this.data.type
+
+        this.setData({
+            goods: {
+                items: [],
+                params: {
+                    page : 1,
+                    limit: 10,
+                    type : type,
+                },
+                paginate: {}
+            }
+        })
     },
     navigateTo(e) {
         console.log(e)
@@ -52,21 +63,7 @@ Page({
         })
     },
     onPullDownRefresh() {
-        const type = this.data.goods.params.type    
-        const goods = {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-                type : type,
-            },
-            paginate: {}
-        }
-
-        this.setData({
-            goods: goods
-        })
-
+        this.initData()
         this.getGoods()
     },
     onReachBottom() {

@@ -10,10 +10,12 @@ Page({
         this.setData({
             id: option.id
         })
-        this.getOrderDetail()
     },
-    getOrderDetail() {
-        App.HttpService.getOrderDetail(this.data.id)
+    onShow() {
+        this.getOrderDetail(this.data.id)
+    },
+    getOrderDetail(id) {
+        App.HttpService.getOrderDetail(id)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {

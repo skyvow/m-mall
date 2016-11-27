@@ -1,7 +1,7 @@
 <view class="address">
     <view class="weui-panel">
         <view class="weui-panel__bd">
-            <view class="weui-media-box weui-media-box_text" bindtap="navigateTo">
+            <view class="weui-media-box weui-media-box_text" bindtap="redirectTo">
                 <view class="weui-media-box__title weui-media-box__title_in-text">{{ address.item.name }} {{ address.item.gender === 'female' ? '女士' : '先生' }} {{ address.item.tel }}</view>
                 <view class="weui-media-box__desc">{{ address.item.address }}</view>
                 <view class="addr">

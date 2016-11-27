@@ -19,6 +19,10 @@
     </view>
 </view>
 
+<loading hidden="{{ hidden }}">
+    加载中...
+</loading>
+    
 <view class="container" wx:if="{{ !carts.items.length }}">
 	<view class="prompt-message">
 		<image src="../../assets/images/cart-null.png" class="prompt-icon" />

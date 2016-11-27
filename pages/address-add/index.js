@@ -64,6 +64,6 @@ Page({
 			icon    : 'success', 
 			duration: 1500, 
 		})
-		.then(() => App.WxService.redirectTo('/pages/address/index'))
+		.then(() => App.WxService.navigateBack())
 	},
 })

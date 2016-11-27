@@ -2,14 +2,21 @@ const App = getApp()
 
 Page({
     data: {
+        hidden: !0,
         carts: {
             items: []
         }
     },
     onLoad() {
+    },
+    onShow() {
         this.getCarts()
     },
     getCarts() {
+        this.setData({ 
+            hidden: !1
+        })
+
         App.HttpService.getCartByUser()
         .then(data => {
             console.log(data)
@@ -19,6 +26,10 @@ Page({
                     'carts.items': data.data
                 })
             }
+            
+            this.setData({ 
+                hidden: !0
+            })
         })
     },
     onPullDownRefresh() {

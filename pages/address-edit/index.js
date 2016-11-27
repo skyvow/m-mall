@@ -23,10 +23,12 @@ Page({
         ],
     },
     onLoad(option) {
-    	this.renderForm(option.id)
     	this.setData({
     		id: option.id
     	})
+    },
+    onShow() {
+    	this.renderForm(this.data.id)
     },
     renderForm(id) {
     	App.HttpService.getAddressDetail(id)
@@ -102,6 +104,6 @@ Page({
 			icon    : 'success', 
 			duration: 1500, 
 		})
-		.then(() => App.WxService.redirectTo('/pages/address/index'))
+		.then(() => App.WxService.navigateBack())
 	},
 })

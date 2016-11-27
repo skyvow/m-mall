@@ -3,17 +3,24 @@ const App = getApp()
 Page({
     data: {
         hidden: !0,
-        classify: {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        },
+        classify: {},
     },
     onLoad() {
-    	this.getClassify()       
+    },
+    onShow() {
+        this.onPullDownRefresh()
+    },
+    initData() {
+        this.setData({
+            classify: {
+                items: [],
+                params: {
+                    page : 1,
+                    limit: 10,
+                },
+                paginate: {}
+            }
+        })
     },
     navigateTo(e) {
         console.log(e)
@@ -48,19 +55,7 @@ Page({
         })
     },
     onPullDownRefresh() {
-        const classify = {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
-
-        this.setData({
-            classify: classify
-        })
-
+        this.initData()
         this.getClassify()
     },
     onReachBottom() {

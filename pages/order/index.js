@@ -3,17 +3,24 @@ const App = getApp()
 Page({
     data: {
         hidden: !0,
-        order: {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
+        order: {}
     },
     onLoad() {
-        this.getOrderList()
+    },
+    onShow() {
+        this.onPullDownRefresh()
+    },
+    initData() {
+        this.setData({
+            order: {
+                items: [],
+                params: {
+                    page : 1,
+                    limit: 10,
+                },
+                paginate: {}
+            }
+        })
     },
     navigateTo(e) {
         console.log(e)
@@ -54,19 +61,7 @@ Page({
         })
     },
     onPullDownRefresh() {
-        const order = {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        }
-
-        this.setData({
-            order: order
-        })
-
+        this.initData()
         this.getOrderList()
     },
     onReachBottom() {

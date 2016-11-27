@@ -7,7 +7,7 @@ Page({
         autoplay: !1,
         interval: 3000,
         duration: 1000,
-        goodss: {
+        goods: {
             item: {}
         }
     },
@@ -15,11 +15,15 @@ Page({
         // console.log(e.detail.current)
     },
     onLoad(option) {
-        console.log(option)
-        this.getDetail(option.id)
+        this.setData({
+            id: option.id
+        })
+    },
+    onShow() {
+        this.getDetail(this.data.id)
     },
     addCart(e) {
-        const goods = this.data.goodss.item._id
+        const goods = this.data.goods.item._id
         App.HttpService.addCartByUser(goods)
         .then(data => {
             console.log(data)
@@ -42,7 +46,7 @@ Page({
         	if (data.meta.code == 0) {
                 data.data.images.forEach(n => n.path = App.renderImage(n.path))
         		this.setData({
-                    'goodss.item': data.data
+                    'goods.item': data.data
                 })
         	}
         })

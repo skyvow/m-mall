@@ -10,7 +10,7 @@
                             <view class="weui-media-box__info__meta text-orangered" wx:if="{{ item.is_def }}">默认地址</view>
                         </view>
                         <label class="radio">
-                            <radio value="{{ item._id }}" checked="{{ item.is_def }}" />
+                            <radio value="{{ item._id }}" checked="{{ item.checked }}" />
                         </label>
                     </view>
                 </view>
