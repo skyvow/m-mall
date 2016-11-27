@@ -2,10 +2,42 @@ const App = getApp()
 
 Page({
     data: {
+        activeIndex: 0,
+        navList: [],
         hidden: !0,
-        order: {}
+        order: {},
+        prompt: {
+            hidden: !0,
+            icon: '../../assets/images/iconfont-order-default.png',
+            title: '您还没有相关的订单',
+            text: '可以去看看有哪些想买的',
+        },
     },
     onLoad() {
+        this.setData({
+            navList: [
+                {
+                    name: '全部',
+                    _id: 'all',
+                },
+                {
+                    name: '已提交',
+                    _id: 'submitted',
+                },
+                {
+                    name: '已确认',
+                    _id: 'confirmed',
+                },
+                {
+                    name: '已完成',
+                    _id: 'finished',
+                },
+                {
+                    name: '已取消',
+                    _id: 'canceled',
+                },
+            ]
+        })
     },
     onShow() {
         this.onPullDownRefresh()
@@ -17,6 +49,7 @@ Page({
                 params: {
                     page : 1,
                     limit: 10,
+                    type : 'all',
                 },
                 paginate: {}
             }
@@ -51,7 +84,8 @@ Page({
                 order.params.page = data.data.paginate.next
                 order.params.limit = data.data.paginate.perPage
                 this.setData({
-                    order: order
+                    order: order,
+                    'prompt.hidden': order.items.length,
                 })
             }
 
@@ -69,6 +103,16 @@ Page({
     },
     lower() {
         if (!this.data.order.paginate.hasNext) return
+        this.getOrderList()
+    },
+    onTapTag(e) {
+        const type = e.currentTarget.dataset.type
+        const index = e.currentTarget.dataset.index
+        this.initData()
+        this.setData({
+            activeIndex: index,
+            'order.params.type': type,
+        })
         this.getOrderList()
     },
 })

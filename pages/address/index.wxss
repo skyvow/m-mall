@@ -1,4 +1,5 @@
 .address-list {
+	height: 100%;
 	padding-bottom: 46px;	
 }
 

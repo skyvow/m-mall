@@ -5,6 +5,9 @@ Page({
         hidden: !0,
         type  : null,
         goods : {},
+        prompt: {
+            hidden: !0,
+        },
     },
     onLoad(option) {
         this.setData({
@@ -53,7 +56,8 @@ Page({
                 goods.params.page = data.data.paginate.next
                 goods.params.limit = data.data.paginate.perPage
                 this.setData({
-                    goods: goods
+                    goods: goods,
+                    'prompt.hidden': goods.items.length,
                 })
             }
 

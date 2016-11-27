@@ -4,6 +4,9 @@ Page({
     data: {
         hidden: !0,
         classify: {},
+        prompt: {
+            hidden: !0,
+        },
     },
     onLoad() {
     },
@@ -45,7 +48,8 @@ Page({
                 classify.params.page = data.data.paginate.next
                 classify.params.limit = data.data.paginate.perPage
                 this.setData({
-                    classify: classify
+                    classify: classify,
+                    'prompt.hidden': classify.items.length,
                 })
             }
 

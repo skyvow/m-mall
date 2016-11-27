@@ -17,7 +17,10 @@ Page({
                 limit: 10,
             },
             paginate: {}
-        }
+        },
+        prompt: {
+            hidden: !0,
+        },
     },
     swiperchange(e) {
         // console.log(e.detail.current)
@@ -78,7 +81,8 @@ Page({
                 goods.params.page = data.data.paginate.next
                 goods.params.limit = data.data.paginate.perPage
                 this.setData({
-                    goods: goods
+                    goods: goods,
+                    'prompt.hidden': goods.items.length,
                 })
             }
 

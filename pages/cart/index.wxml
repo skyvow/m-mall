@@ -1,3 +1,5 @@
+<import src="../common/prompt.wxml"/>
+
 <view class="weui-panel weui-panel_access" wx:if="{{ !!carts.items.length }}">
     <view class="weui-panel__bd">
         <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{ carts.items }}" wx:key="" bindtap="navigateTo" data-id="{{ item.goods._id }}">
@@ -23,13 +25,7 @@
     加载中...
 </loading>
     
-<view class="container" wx:if="{{ !carts.items.length }}">
-	<view class="prompt-message">
-		<image src="../../assets/images/cart-null.png" class="prompt-icon" />
-		<view class="prompt-text">购物车空空如也</view>
-		<view class="prompt-text">来挑几件好货吧</view>
-	</view>
-</view>
+<template is="prompt" data="{{ prompt }}"/>
 
 <view class="button-sp-area">
     <button class="weui-btn" type="primary" bindtap="confirmOrder">去结算</button>

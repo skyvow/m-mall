@@ -105,6 +105,43 @@ page{
     color: orangered;
 }
 
+.prompt-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #939393;
+}
+
+.prompt-message {
+    margin-top: 0;
+    text-align: center;
+}
+
+.prompt-message .prompt-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.prompt-message .prompt-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 2px 0;
+}
+
+.prompt-message .prompt-text {
+    font-size: 12px;
+    margin: 2px 0;
+}
+
+.prompt-message .prompt-button {
+    margin: 2px auto;
+    width: 80px;
+    padding: 2px 0;
+    border: 1px solid #eee;
+}
+
 .margin-top-0 {
 	margin-top: 0px !important; 
 }

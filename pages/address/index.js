@@ -3,7 +3,13 @@ const App = getApp()
 Page({
     data: {
         hidden: !0,
-        address: {}
+        address: {},
+        prompt: {
+            hidden: !0,
+            icon: '../../assets/images/iconfont-addr-empty.png',
+            title: '还没有收货地址呢',
+            text: '暂时没有相关数据',
+        },
     },
     onLoad() {
     },
@@ -59,7 +65,8 @@ Page({
                 address.params.page = data.data.paginate.next
                 address.params.limit = data.data.paginate.perPage
                 this.setData({
-                    address: address
+                    address: address,
+                    'prompt.hidden': address.items.length,
                 })
             }
 
