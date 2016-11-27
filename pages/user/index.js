@@ -17,6 +17,7 @@ Page({
 			{
 				icon: '../../assets/images/iconfont-kefu.png',
 				text: '联系客服',
+				path: '18521708248',
 			}, 
 			{
 				icon: '../../assets/images/iconfont-help.png',
@@ -44,7 +45,15 @@ Page({
 		})
 	},
 	navigateTo(e) {
-        console.log(e)
-        App.WxService.navigateTo(e.currentTarget.dataset.path)
+		const index = e.currentTarget.dataset.index
+		const path = e.currentTarget.dataset.path
+
+		switch(index) {
+			case '2':
+				App.WxService.makePhoneCall(path)
+				break
+			default:
+				App.WxService.navigateTo(path)
+		}
     },
 })
