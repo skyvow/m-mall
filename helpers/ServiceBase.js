@@ -27,7 +27,7 @@ class ServiceBase {
         for(let key in that.instanceSource) {   
             that.instanceSource[key].forEach(function(method) {
                 that[method.toLowerCase() + that.suffix] = function() {
-                    return that.__getPromise(es6.Promise, that.__getResolver(that.__defaultRequest, [method, ...arguments], that))
+                    return that.__getPromise(es6.Promise, that.__getResolver(that.__defaultRequest, [method, ...Array.from(arguments)], that))
                 }
             })
         }
