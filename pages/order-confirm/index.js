@@ -81,12 +81,18 @@ Page({
         })
     },
     addOrder() {
-        const items = this.data.carts.items.map(n => n._id)
         const address_id = this.data.address_id
         const params = {
-            items: items, 
+            items: [], 
             address_id: address_id, 
         }
+        this.data.carts.items.forEach(n => {
+            params.items.push({
+                id: n.goods._id,
+                total: n.total,
+            })
+        })
+        console.log(params)
         App.HttpService.postOrder(params)
         .then(data => {
             console.log(data)
@@ -96,7 +102,6 @@ Page({
                 })
             }
         })
-        console.log(items)
     },
     clear() {
         App.HttpService.clearCartByUser()

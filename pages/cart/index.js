@@ -2,6 +2,7 @@ const App = getApp()
 
 Page({
     data: {
+        canEdit: !1,
         hidden: !0,
         carts: {
             items: []
@@ -53,13 +54,78 @@ Page({
         App.WxService.setStorageSync('confirmOrder', this.data.carts.items)
         App.WxService.navigateTo('/pages/order-confirm/index')
     },
+    del(e) {
+        const id = e.currentTarget.dataset.id
+
+        App.WxService.showModal({
+            title: '友情提示', 
+            content: '确定要删除这个宝贝吗？', 
+        })
+        .then(data => {
+            if (data.confirm == 1) {
+                App.HttpService.delCartByUser(id)
+                .then(data => {
+                    console.log(data)
+                    if (data.meta.code == 0) {
+                        this.getCarts()
+                    }
+                })
+            }
+        })
+    },
     clear() {
-        App.HttpService.clearCartByUser()
+        App.WxService.showModal({
+            title: '友情提示', 
+            content: '确定要清空购物车吗？', 
+        })
+        .then(data => {
+            if (data.confirm == 1) {
+                App.HttpService.clearCartByUser()
+                .then(data => {
+                    console.log(data)
+                    if (data.meta.code == 0) {
+                        this.getCarts()
+                    }
+                })
+            }
+        })
+    },
+    onTapEdit(e) {
+        this.setData({
+            canEdit: !!e.currentTarget.dataset.value
+        })
+    },
+    bindKeyInput(e) {
+        const id = e.currentTarget.dataset.id
+        const total = Math.abs(e.detail.value)
+        if (total < 0 || total > 100) return
+        this.putCartByUser(id, {
+            total: total
+        })
+    },
+    putCartByUser(id, params) {
+        App.HttpService.putCartByUser(id, params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
                 this.getCarts()
             }
         })
-    }
+    },
+    decrease(e) {
+        const id = e.currentTarget.dataset.id
+        const total = Math.abs(e.currentTarget.dataset.total)
+        if (total == 1) return
+        this.putCartByUser(id, {
+            total: total - 1
+        })
+    },
+    increase(e) {
+        const id = e.currentTarget.dataset.id
+        const total = Math.abs(e.currentTarget.dataset.total)
+        if (total == 100) return
+        this.putCartByUser(id, {
+            total: total + 1
+        })
+    },
 })

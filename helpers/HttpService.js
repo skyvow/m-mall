@@ -45,8 +45,12 @@ class Service extends ServiceBase {
 		})
 	}
 
+	putCartByUser(id, params) {
+		return this.putRequest(`${this.$$path.cart}/${id}`, params)
+	}
+
 	delCartByUser(id) {
-		return this.deleteRequest(`${this.$$path.goods}/${id}`)
+		return this.deleteRequest(`${this.$$path.cart}/${id}`)
 	}
 
 	clearCartByUser() {

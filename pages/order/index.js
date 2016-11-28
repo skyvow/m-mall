@@ -73,13 +73,7 @@ Page({
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
-                data.data.items.forEach(v => {
-                    v.totalAmount = 0
-                    v.items.forEach(n => {
-                        v.totalAmount+=n.totalAmount
-                    })
-                })
-                order.items = order.items.concat(data.data.items)
+                order.items = [...order.items, ...data.data.items]
                 order.paginate = data.data.paginate
                 order.params.page = data.data.paginate.next
                 order.params.limit = data.data.paginate.perPage
