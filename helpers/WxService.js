@@ -49,7 +49,7 @@ class Service {
 	    that.redirectTo = (url, params) => {
 	        const $$url = new tools().buildUrl(url, params)
 	    	return new es6.Promise((resolve, reject) => {
-	    		this.wx.redirectTo({
+	    		wx.redirectTo({
 	    			url: $$url,
 					success: res => resolve(res),
 		            fail: res => reject(res),
