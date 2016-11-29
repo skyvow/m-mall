@@ -7,7 +7,7 @@ Page({
 			name   : null, 
 			gender : 'male', 
 			tel    : null, 
-			address: null, 
+			address: '', 
 			is_def : !1, 
         },
         radio: [
@@ -48,15 +48,17 @@ Page({
 		this.setData(params)
 	},
 	submitForm() {
-		const params = this.data.form
-		console.log(params)
-		App.HttpService.postAddress(params)
-		.then(data => {
-			console.log(data)
-			if (data.meta.code == 0) {
-				this.showToast(data.meta.message)
-			}
-		})
+		setTimeout(() => {
+			const params = this.data.form
+			console.log(params)
+			App.HttpService.postAddress(params)
+			.then(data => {
+				console.log(data)
+				if (data.meta.code == 0) {
+					this.showToast(data.meta.message)
+				}
+			})
+		}, 300)
 	},
 	showToast(message) {
 		App.WxService.showToast({
@@ -65,5 +67,14 @@ Page({
 			duration: 1500, 
 		})
 		.then(() => App.WxService.navigateBack())
+	},
+	chooseLocation() {
+		App.WxService.chooseLocation()
+	    .then(data => {
+	        console.log(data)
+	        this.setData({
+	        	'form.address': data.address
+	        })
+	    })
 	},
 })

@@ -105,6 +105,26 @@ page{
     color: orangered;
 }
 
+.weui-cell.weui-cell_textarea {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    padding-right: 35px;
+}
+
+.weui-cell_textarea .weui-textarea-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.weui-cell_textarea .weui-textarea-icon image {
+    width: 20px;
+    height: 20px;
+}
+
 .prompt-container {
     display: flex;
     height: 100%;

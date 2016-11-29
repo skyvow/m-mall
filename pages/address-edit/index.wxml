@@ -23,15 +23,18 @@
             <view class="weui-label">联系电话</view>
         </view>
         <view class="weui-cell__bd">
-            <input value="{{ form.tel }}" data-model="form.tel" bindinput="bindKeyInput" class="weui-input" type="text" placeholder="请输入收货人电话" />
+            <input value="{{ form.tel }}" data-model="form.tel" bindinput="bindKeyInput" class="weui-input" type="tel" placeholder="请输入收货人电话" />
         </view>
     </view>
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell weui-cell_textarea">
         <view class="weui-cell__hd">
             <view class="weui-label">联系地址</view>
         </view>
         <view class="weui-cell__bd">
-            <input value="{{ form.address }}" data-model="form.address" bindinput="bindKeyInput" class="weui-input" type="text" placeholder="请输入收货人地址" />
+            <textarea data-model="form.address" bindblur="bindKeyInput" class="weui-textarea" placeholder="请输入收货人地址" value="{{ form.address }}" style="height: 3.3em" />
+            <view class="weui-textarea-icon" bindtap="chooseLocation">
+                <image src="../../assets/images/iconfont-addr-default.png"></image>
+            </view>
         </view>
     </view>
 </view>
