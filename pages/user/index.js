@@ -50,7 +50,9 @@ Page({
 
 		switch(index) {
 			case '2':
-				App.WxService.makePhoneCall(path)
+				App.WxService.makePhoneCall({
+					phoneNumber: path
+				})
 				break
 			default:
 				App.WxService.navigateTo(path)
