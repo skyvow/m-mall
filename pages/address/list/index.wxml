@@ -1,4 +1,4 @@
-<import src="../common/prompt.wxml"/>
+<import src="../../common/prompt.wxml"/>
 
 <view class="address-list">
     <scroll-view class="scroll-list"  scroll-y="true" style="height: 100%" bindscrolltolower="lower">
@@ -12,7 +12,7 @@
                         <view class="weui-media-box__info__meta" wx:if="{{ !item.is_def }}" bindtap="setDefalutAddress" data-id="{{ item._id }}">设为默认</view>
                     </view>
                     <view class="edit" bindtap="toAddressEdit" data-id="{{ item._id }}">
-                        <image class="icon" src="../../assets/images/iconfont-edit.png" />
+                        <image class="icon" src="../../../assets/images/iconfont-edit.png" />
                     </view>
                 </view>
             </view>
@@ -22,7 +22,7 @@
         </loading>
         <template is="prompt" data="{{ prompt }}"/>
         <view class="btn-plus" bindtap="toAddressAdd">
-            <image class="icon" src="../../assets/images/iconfont-plus-circle.png" />
+            <image class="icon" src="../../../assets/images/iconfont-plus-circle.png" />
             <text>新增地址</text>
         </view>
     </scroll-view>

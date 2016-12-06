@@ -8,12 +8,13 @@ Page({
         order: {},
         prompt: {
             hidden: !0,
-            icon: '../../assets/images/iconfont-order-default.png',
+            icon: '../../../assets/images/iconfont-order-default.png',
             title: '您还没有相关的订单',
             text: '可以去看看有哪些想买的',
         },
     },
     onLoad() {
+        this.order = new App.HttpResource('/order/:id', {id: '@id'})
         this.setData({
             navList: [
                 {
@@ -57,7 +58,7 @@ Page({
     },
     navigateTo(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/order-detail/index', {
+        App.WxService.navigateTo('/pages/order/detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
@@ -69,7 +70,8 @@ Page({
             hidden: !1
         })
 
-        App.HttpService.getOrderList(params)
+        // App.HttpService.getOrderList(params)
+        this.order.queryAsync(params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {

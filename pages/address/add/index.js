@@ -23,6 +23,7 @@ Page({
         ],
     },
     onLoad() {
+        this.address = new App.HttpResource('/address/:id', {id: '@id'})
     },
     radioChange(e) {
 		console.log('radio发生change事件，携带value值为：', e.detail.value)
@@ -51,7 +52,8 @@ Page({
 		setTimeout(() => {
 			const params = this.data.form
 			console.log(params)
-			App.HttpService.postAddress(params)
+			// App.HttpService.postAddress(params)
+			this.address.saveAsync(params)
 			.then(data => {
 				console.log(data)
 				if (data.meta.code == 0) {

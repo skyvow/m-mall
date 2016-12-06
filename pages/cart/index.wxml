@@ -39,7 +39,7 @@
     
 <template is="prompt" data="{{ prompt }}"/>
 
-<view class="button-sp-area">
+<view class="button-sp-area" wx:if="{{ !!carts.items.length }}">
     <button class="weui-btn" type="primary" bindtap="confirmOrder">去结算</button>
     <button class="weui-btn" type="warn" bindtap="clear">清空</button>
 </view>

@@ -7,6 +7,7 @@ Page({
         },
     },
     onLoad(option) {
+        this.order = new App.HttpResource('/order/:id', {id: '@id'})
         this.setData({
             id: option.id
         })
@@ -15,7 +16,8 @@ Page({
         this.getOrderDetail(this.data.id)
     },
     getOrderDetail(id) {
-        App.HttpService.getOrderDetail(id)
+        // App.HttpService.getOrderDetail(id)
+        this.order.getAsync({id: id})
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {

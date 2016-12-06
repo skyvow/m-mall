@@ -7,12 +7,12 @@ Page({
 			{
 				icon: '../../assets/images/iconfont-order.png',
 				text: '我的订单',
-				path: '/pages/order/index'
+				path: '/pages/order/list/index'
 			}, 
 			{
 				icon: '../../assets/images/iconfont-addr.png',
 				text: '收货地址',
-				path: '/pages/address/index'
+				path: '/pages/address/list/index'
 			}, 
 			{
 				icon: '../../assets/images/iconfont-kefu.png',

@@ -28,7 +28,7 @@ Page({
     },
     radioChange(e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
-        App.WxService.redirectTo('/pages/order-confirm/index', {
+        App.WxService.redirectTo('/pages/order/confirm/index', {
             id: e.detail.value
         })
     },

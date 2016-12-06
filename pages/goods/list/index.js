@@ -10,6 +10,7 @@ Page({
         },
     },
     onLoad(option) {
+        this.goods = new App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
             type: option.type
         })
@@ -34,7 +35,7 @@ Page({
     },
     navigateTo(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/goods-detail/index', {
+        App.WxService.navigateTo('/pages/goods/detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
@@ -46,12 +47,13 @@ Page({
             hidden: !1
         })
 
-        App.HttpService.getGoods(params)
+        // App.HttpService.getGoods(params)
+        this.goods.queryAsnyc(params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
                 data.data.items.forEach(n => n.thumb_url = App.renderImage(n.images[0] && n.images[0].path))
-                goods.items = goods.items.concat(data.data.items)
+                goods.items = [...goods.items, ...data.data.items]
                 goods.paginate = data.data.paginate
                 goods.params.page = data.data.paginate.next
                 goods.params.limit = data.data.paginate.perPage

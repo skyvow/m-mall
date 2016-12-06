@@ -45,14 +45,14 @@ Page({
     },
     navigateTo(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/goods-detail/index', {
+        App.WxService.navigateTo('/pages/goods/detail/index', {
             id: e.currentTarget.dataset.id
         })
     },
     confirmOrder(e) {
         console.log(e)
         App.WxService.setStorageSync('confirmOrder', this.data.carts.items)
-        App.WxService.navigateTo('/pages/order-confirm/index')
+        App.WxService.navigateTo('/pages/order/confirm/index')
     },
     del(e) {
         const id = e.currentTarget.dataset.id

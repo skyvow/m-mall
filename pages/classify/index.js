@@ -9,6 +9,7 @@ Page({
         },
     },
     onLoad() {
+        this.classify = new App.HttpResource('/classify/:id', {id: '@id'})
     },
     onShow() {
         this.onPullDownRefresh()
@@ -27,7 +28,7 @@ Page({
     },
     navigateTo(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/goods/index', {
+        App.WxService.navigateTo('/pages/goods/list/index', {
             type: e.currentTarget.dataset.id
         })
     },
@@ -39,11 +40,12 @@ Page({
             hidden: !1
         })
 
-        App.HttpService.getClassify(params)
+        // App.HttpService.getClassify(params)
+        this.classify.queryAsync(params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
-                classify.items = classify.items.concat(data.data.items)
+                classify.items = [...classify.items, ...data.data.items]
                 classify.paginate = data.data.paginate
                 classify.params.page = data.data.paginate.next
                 classify.params.limit = data.data.paginate.perPage

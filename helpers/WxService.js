@@ -1,4 +1,4 @@
-import tools from 'tools'
+import Tools from 'Tools'
 import es6 from '../assets/plugins/es6-promise'
 
 class Service {
@@ -36,7 +36,7 @@ class Service {
 		}
 
 		that.navigateTo = (url, params) => {
-	        const $$url = new tools().buildUrl(url, params)
+	        const $$url = new Tools().buildUrl(url, params)
 	    	return new es6.Promise((resolve, reject) => {
 	    		wx.navigateTo({
 	    			url: $$url,
@@ -47,7 +47,7 @@ class Service {
 	    }
 
 	    that.redirectTo = (url, params) => {
-	        const $$url = new tools().buildUrl(url, params)
+	        const $$url = new Tools().buildUrl(url, params)
 	    	return new es6.Promise((resolve, reject) => {
 	    		wx.redirectTo({
 	    			url: $$url,

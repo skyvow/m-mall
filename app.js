@@ -1,11 +1,21 @@
+import HttpResource from 'helpers/HttpResource'
 import HttpService from 'helpers/HttpService'
 import WxService from 'helpers/WxService'
-import Tools from 'helpers/tools'
+import Tools from 'helpers/Tools'
 import Config from 'etc/config'
 
 App({
 	onLaunch() {
 		console.log('onLaunch')
+		this.signIn()
+	},
+	onShow() {
+		console.log('onShow')
+	},
+	onHide() {
+		console.log('onHide')
+	},
+	signIn() {
 		if (this.WxService.getStorageSync('token')) return
 		this.HttpService.signIn({
 			username: 'admin', 
@@ -17,12 +27,6 @@ App({
 				this.WxService.setStorageSync('token', data.data.token)
 			}
 		})
-	},
-	onShow() {
-		console.log('onShow')
-	},
-	onHide() {
-		console.log('onHide')
 	},
 	getUserInfo() {
 		return this.WxService.login()
@@ -44,6 +48,7 @@ App({
         if (path.indexOf('http') !== -1) return path
         return `${this.Config.fileBasePath}${path}`
     },
+	HttpResource: HttpResource, 
 	HttpService: HttpService, 
 	WxService: new WxService, 
 	Tools: new Tools, 

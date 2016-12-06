@@ -23,6 +23,7 @@ Page({
         ],
     },
     onLoad(option) {
+    	this.address = new App.HttpResource('/address/:id', {id: '@id'})
     	this.setData({
     		id: option.id
     	})
@@ -31,7 +32,8 @@ Page({
     	this.renderForm(this.data.id)
     },
     renderForm(id) {
-    	App.HttpService.getAddressDetail(id)
+    	// App.HttpService.getAddressDetail(id)
+    	this.address.getAsync({id: id})
 		.then(data => {
 			console.log(data)
 			if (data.meta.code == 0) {
@@ -82,7 +84,8 @@ Page({
 			const id = this.data.id
 			const params = this.data.form
 			console.log(params)
-			App.HttpService.putAddress(id, params)
+			// App.HttpService.putAddress(id, params)
+			this.address.updateAsync({id: id}, params)
 			.then(data => {
 				console.log(data)
 				if (data.meta.code == 0) {
@@ -92,7 +95,8 @@ Page({
 		}, 300)
 	},
 	delete() {
-		App.HttpService.deleteAddress(this.data.id)
+		// App.HttpService.deleteAddress(this.data.id)
+		this.address.deleteAsync({id: this.data.id})
 		.then(data => {
 			console.log(data)
 			if (data.meta.code == 0) {

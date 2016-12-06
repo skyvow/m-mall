@@ -19,8 +19,8 @@ class Service extends ServiceBase {
 		return this.postRequest(this.$$path.signIn, params) 
 	}
 
-	getBanners() {
-		return this.getRequest(this.$$path.banner)
+	getBanners(params) {
+		return this.getRequest(this.$$path.banner, params)
 	}
 
 	getGoods(params) {

@@ -6,12 +6,13 @@ Page({
         address: {},
         prompt: {
             hidden: !0,
-            icon: '../../assets/images/iconfont-addr-empty.png',
+            icon: '../../../assets/images/iconfont-addr-empty.png',
             title: '还没有收货地址呢',
             text: '暂时没有相关数据',
         },
     },
     onLoad() {
+        this.address = new App.HttpResource('/address/:id', {id: '@id'})
     },
     onShow() {
         this.onPullDownRefresh()
@@ -30,13 +31,13 @@ Page({
     },
     toAddressEdit(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/address-edit/index', {
+        App.WxService.navigateTo('/pages/address/edit/index', {
             id: e.currentTarget.dataset.id
         })
     },
     toAddressAdd(e) {
         console.log(e)
-        App.WxService.navigateTo('/pages/address-add/index')
+        App.WxService.navigateTo('/pages/address/add/index')
     },
     setDefalutAddress(e) {
         const id = e.currentTarget.dataset.id
@@ -56,11 +57,12 @@ Page({
             hidden: !1
         })
 
-        App.HttpService.getAddressList(params)
+        // App.HttpService.getAddressList(params)
+        this.address.queryAsync(params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
-                address.items = address.items.concat(data.data.items)
+                address.items = [...address.items, ...data.data.items]
                 address.paginate = data.data.paginate
                 address.params.page = data.data.paginate.next
                 address.params.limit = data.data.paginate.perPage

@@ -1,5 +1,5 @@
-<import src="../common/nav.wxml"/>
-<import src="../common/prompt.wxml"/>
+<import src="../../common/nav.wxml"/>
+<import src="../../common/prompt.wxml"/>
 
 <template is="nav" data="{{ navList, activeIndex }}"/>
 
