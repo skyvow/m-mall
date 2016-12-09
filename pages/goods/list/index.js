@@ -43,10 +43,6 @@ Page({
         const goods = this.data.goods
         const params = goods.params
 
-        this.setData({ 
-            hidden: !1
-        })
-
         // App.HttpService.getGoods(params)
         this.goods.queryAsnyc(params)
         .then(data => {
@@ -62,10 +58,6 @@ Page({
                     'prompt.hidden': goods.items.length,
                 })
             }
-
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

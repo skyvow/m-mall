@@ -106,4 +106,4 @@ class Service extends ServiceBase {
 	}
 }
 
-export default new Service
+export default Service

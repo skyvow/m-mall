@@ -22,9 +22,6 @@
             <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">再来一单</navigator>
         </view>
     </view>
-    <loading hidden="{{ hidden }}">
-        加载中...
-    </loading>
 
     <template is="prompt" data="{{ prompt }}"/>
 </scroll-view>

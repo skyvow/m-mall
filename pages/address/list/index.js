@@ -2,7 +2,6 @@ const App = getApp()
 
 Page({
     data: {
-        hidden: !0,
         address: {},
         prompt: {
             hidden: !0,
@@ -53,10 +52,6 @@ Page({
         const address = this.data.address
         const params = address.params
 
-        this.setData({ 
-            hidden: !1
-        })
-
         // App.HttpService.getAddressList(params)
         this.address.queryAsync(params)
         .then(data => {
@@ -71,10 +66,6 @@ Page({
                     'prompt.hidden': address.items.length,
                 })
             }
-
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

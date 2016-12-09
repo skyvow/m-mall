@@ -9,7 +9,6 @@ Page({
         autoplay: !1,
         interval: 3000,
         duration: 1000,
-        hidden: !0,
         goods: {
             items: [],
             params: {
@@ -77,10 +76,6 @@ Page({
         const goods = this.data.goods
         const params = goods.params
 
-        this.setData({ 
-            hidden: !1
-        })
-
         // App.HttpService.getGoods(params)
         this.goods.queryAsync(params)
         .then(data => {
@@ -96,10 +91,6 @@ Page({
                     'prompt.hidden': goods.items.length,
                 })
             }
-
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

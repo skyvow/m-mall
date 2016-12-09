@@ -7,8 +7,5 @@
 	        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
 	    </navigator>
 	</view>
-	<loading hidden="{{ hidden }}">
-        加载中...
-    </loading>
     <template is="prompt" data="{{ prompt }}"/>
 </scroll-view>

@@ -11,4 +11,4 @@
 </swiper>
 
 <template is="nav" data="{{ navList, activeIndex }}"/>
-<template is="list" data="{{ goods, hidden, prompt }}"/>
+<template is="list" data="{{ goods, prompt }}"/>

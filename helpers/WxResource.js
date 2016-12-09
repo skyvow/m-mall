@@ -230,6 +230,20 @@ class Resource {
      */
     __initDefaults() {
     	this.defaults = {
+    		interceptors: [{
+    			request: function(request) {
+    				return request
+    			},
+    			requestError: function(requestError) {
+    				return requestError
+    			},
+    			response: function(response) {
+    				return response
+    			},
+    			responseError: function(responseError) {
+    				return responseError
+    			},
+    		}],
 			stripTrailingSlashes: true,
 			suffix: 'Async',
 			actions: {
@@ -363,6 +377,15 @@ class Resource {
 			return ids
         }
 
+        const chainInterceptors = (promise, interceptors) => {
+			for (let i = 0, ii = interceptors.length; i < ii;) {
+				let thenFn = interceptors[i++]
+				let rejectFn = interceptors[i++]
+				promise = promise.then(thenFn, rejectFn)
+			}
+			return promise
+		}
+
     	const route = that.__initRoute(that.url, that.options)
     	const actions = that.__tools.extend({}, that.defaults.actions, that.actions)
 
@@ -405,23 +428,45 @@ class Resource {
 				}
 
 				for(let key in action) {
-					httpConfig[key] = that.__tools.clone(action[key])
+					switch (key) {
+						default:
+							httpConfig[key] = that.__tools.clone(action[key])
+							break
+						case 'params':
+							break
+					}
 				}
 
 				if (hasBody) {
 					httpConfig.data = data
 				}
-
+				
 				route.setUrlParams(httpConfig, that.__tools.extend({}, extractParams(data, action.params || {}), params), action.url)
+				
+				let requestInterceptors = []
+     			let responseInterceptors = []
+     			let reversedInterceptors = that.defaults.interceptors
+     			let promise = that.$resolve(httpConfig)
 
-				let promise = that.$http(httpConfig)
+     			reversedInterceptors.forEach((n, i) => {
+					if (n.request || n.requestError) {
+						requestInterceptors.push(n.request, n.requestError)
+					}
+					if (n.response || n.responseError) {
+						responseInterceptors.unshift(n.response, n.responseError)
+					}
+				})
+
+				promise = chainInterceptors(promise, requestInterceptors)
+				promise = promise.then(that.$http)
+				promise = chainInterceptors(promise, responseInterceptors)
 
 				promise = promise.then(res => {
-					(success || noop)(res)
-					return res
+					(success || noop)(res.data)
+					return res.data
 				}, res => {
-					(error || noop)(res)
-					return res
+					(error || noop)(res.data)
+					return res.data
 				})
 
 				return promise
@@ -434,10 +479,28 @@ class Resource {
      */
     $http(obj) {
 		return new es6.Promise((resolve, reject) => {
-			obj.success = (res) => resolve(res.data)
+			obj.success = (res) => resolve(res)
 			obj.fail = (res) => reject(res)
             wx.request(obj)
         })
+	}
+
+	/**
+	 * $resolve
+	 */
+	$resolve(res) {
+		return new es6.Promise((resolve, reject) => {
+			resolve(res)
+		})
+	}
+
+	/**
+	 * $reject
+	 */
+	$reject(res) {
+		return new es6.Promise((resolve, reject) => {
+			reject(res)
+		})
 	}
 
 	/**

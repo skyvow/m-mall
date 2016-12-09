@@ -49,7 +49,7 @@ App({
         return `${this.Config.fileBasePath}${path}`
     },
 	HttpResource: HttpResource, 
-	HttpService: HttpService, 
+	HttpService: new HttpService, 
 	WxService: new WxService, 
 	Tools: new Tools, 
 	Config: Config, 

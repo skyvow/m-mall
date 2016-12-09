@@ -3,7 +3,6 @@ const App = getApp()
 Page({
     data: {
         canEdit: !1,
-        hidden: !0,
         carts: {
             items: []
         },
@@ -20,10 +19,6 @@ Page({
         this.getCarts()
     },
     getCarts() {
-        this.setData({ 
-            hidden: !1
-        })
-
         App.HttpService.getCartByUser()
         .then(data => {
             console.log(data)
@@ -34,10 +29,6 @@ Page({
                     'prompt.hidden': data.data.length,
                 })
             }
-            
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

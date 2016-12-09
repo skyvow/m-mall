@@ -2,7 +2,6 @@ const App = getApp()
 
 Page({
     data: {
-        hidden: !0,
         classify: {},
         prompt: {
             hidden: !0,
@@ -36,10 +35,6 @@ Page({
         const classify = this.data.classify
         const params = classify.params
 
-        this.setData({ 
-            hidden: !1
-        })
-
         // App.HttpService.getClassify(params)
         this.classify.queryAsync(params)
         .then(data => {
@@ -54,10 +49,6 @@ Page({
                     'prompt.hidden': classify.items.length,
                 })
             }
-
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

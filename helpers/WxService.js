@@ -8,6 +8,7 @@ class Service {
 
     __init() {
     	const that = this
+    	that.tools = new Tools
         that.noPromiseMethods = [
 			'stopRecord', 
 			'pauseVoice', 
@@ -36,7 +37,7 @@ class Service {
 		}
 
 		that.navigateTo = (url, params) => {
-	        const $$url = new Tools().buildUrl(url, params)
+	        const $$url = that.tools.buildUrl(url, params)
 	    	return new es6.Promise((resolve, reject) => {
 	    		wx.navigateTo({
 	    			url: $$url,
@@ -47,7 +48,7 @@ class Service {
 	    }
 
 	    that.redirectTo = (url, params) => {
-	        const $$url = new Tools().buildUrl(url, params)
+	        const $$url = that.tools.buildUrl(url, params)
 	    	return new es6.Promise((resolve, reject) => {
 	    		wx.redirectTo({
 	    			url: $$url,

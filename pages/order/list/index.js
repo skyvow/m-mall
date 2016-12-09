@@ -4,7 +4,6 @@ Page({
     data: {
         activeIndex: 0,
         navList: [],
-        hidden: !0,
         order: {},
         prompt: {
             hidden: !0,
@@ -66,10 +65,6 @@ Page({
         const order = this.data.order
         const params = order.params
 
-        this.setData({ 
-            hidden: !1
-        })
-
         // App.HttpService.getOrderList(params)
         this.order.queryAsync(params)
         .then(data => {
@@ -84,10 +79,6 @@ Page({
                     'prompt.hidden': order.items.length,
                 })
             }
-
-            this.setData({ 
-                hidden: !0
-            })
         })
     },
     onPullDownRefresh() {

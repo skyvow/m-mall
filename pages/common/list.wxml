@@ -17,9 +17,6 @@
                 </navigator>
             </view>
         </view>
-        <loading hidden="{{ hidden }}">
-	        加载中...
-	    </loading>
 	    <template is="prompt" data="{{ prompt }}"/>
 	</scroll-view>
 </template>
