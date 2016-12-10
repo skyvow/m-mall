@@ -43,13 +43,17 @@ Page({
         this.onPullDownRefresh()
     },
     initData() {
+        const order = this.data.order
+        const params = order && order.params
+        const type = params && params.type || 'all'
+
         this.setData({
             order: {
                 items: [],
                 params: {
                     page : 1,
                     limit: 10,
-                    type : 'all',
+                    type : type,
                 },
                 paginate: {}
             }
