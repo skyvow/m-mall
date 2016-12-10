@@ -33,6 +33,16 @@ Page({
             }
         })
     },
+    previewImage(e) {
+        const urls = this.data.goods && this.data.goods.item.images.map(n => n.path)
+        const index = e.currentTarget.dataset.index
+        const current = urls[Number(index)]
+        
+        App.WxService.previewImage({
+            current: current, 
+            urls: urls, 
+        })
+    },
     showToast(message) {
         App.WxService.showToast({
             title   : message, 
