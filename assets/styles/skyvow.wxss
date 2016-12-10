@@ -155,11 +155,20 @@ page{
     margin: 2px 0;
 }
 
-.prompt-message .prompt-button {
-    margin: 2px auto;
-    width: 80px;
+.prompt-message .prompt-button-area .prompt-button {
+    font-size: 13px;
+    line-height: 2;
+}
+
+.prompt-message .prompt-button-area .prompt-button {
+    margin: 4px auto;
+    width: 100px;
     padding: 2px 0;
     border: 1px solid #eee;
+}
+
+.prompt-message .prompt-button-area .prompt-button:after {
+    display: none;
 }
 
 .margin-top-0 {

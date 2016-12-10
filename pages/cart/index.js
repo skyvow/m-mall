@@ -11,7 +11,24 @@ Page({
             icon: '../../assets/images/iconfont-cart-empty.png',
             title: '购物车空空如也',
             text: '来挑几件好货吧',
+            buttons: [
+                {
+                    text: '随便逛',
+                    bindtap: 'bindtap',
+                },
+            ],
         },
+    },
+    bindtap: function(e) {
+        const index = e.currentTarget.dataset.index
+        
+        switch(index) {
+            case '0':
+                App.WxService.navigateBack()
+                break
+            default:
+                break
+        }
     },
     onLoad() {
     },
