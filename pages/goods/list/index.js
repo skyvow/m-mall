@@ -44,7 +44,7 @@ Page({
         const params = goods.params
 
         // App.HttpService.getGoods(params)
-        this.goods.queryAsnyc(params)
+        this.goods.queryAsync(params)
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
