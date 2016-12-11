@@ -11,7 +11,11 @@ class ServiceBase {
 
     __init() {
         const that = this
+
+        // 方法名后缀字符串
         that.suffix = 'Request'
+
+        // 发起请求所支持的方法
         that.instanceSource = {
             method: [
                 'OPTIONS', 
@@ -24,6 +28,8 @@ class ServiceBase {
                 'CONNECT',
             ]
         }
+
+        // 遍历对象构造方法，方法名以小写字母+后缀名
         for(let key in that.instanceSource) {   
             that.instanceSource[key].forEach(function(method) {
                 that[method.toLowerCase() + that.suffix] = function() {
@@ -32,18 +38,30 @@ class ServiceBase {
             })
         }
     }
-
+    
+    /**
+     * __getPromise
+     */
     __getPromise(Promise, resolver) {
         if(Promise) return new Promise(resolver)
         throw new Error('Promise library is not supported')
     }
 
+    /**
+     * __getResolver
+     */
     __getResolver(method, args, context) {
         return function(resolve, reject) {
             method.apply(context, args)(resolve, reject)
         }
     }
 
+    /**
+     * 以wx.request作为底层方法
+     * @param {String} method 请求方法
+     * @param {String} url    接口地址
+     * @param {Object} params 请求参数
+     */
     __defaultRequest(method = '', url = '', params = {}) {
         const $$header = this.setHeaders()
         const $$url = `${this.$$basePath}${this.$$prefix}${url}`
@@ -65,6 +83,9 @@ class ServiceBase {
         }
     }
 
+    /**
+     * 设置请求的 header , header 中不能设置 Referer
+     */
     setHeaders() {
         return {
         	// 'Accept': 'application/json', 

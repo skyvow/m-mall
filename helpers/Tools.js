@@ -221,6 +221,11 @@ class Tools{
       return this.isNumber(value) && value != +value
     }
 
+    /**
+     * 判断某个元素是否为错误类型
+     * @param  {Object}  value 
+     * @return {Boolean}       
+     */
     isError(value) {
     	return this.type(value) === '[object Error]'
     }

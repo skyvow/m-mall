@@ -230,6 +230,7 @@ class Resource {
      */
     __initDefaults() {
     	this.defaults = {
+    		// 拦截器
     		interceptors: [{
     			request: function(request) {
     				return request
@@ -244,8 +245,14 @@ class Resource {
     				return responseError
     			},
     		}],
+
+    		// URL是否以‘/‘结尾
 			stripTrailingSlashes: true,
+
+			// 方法名后缀字符串
 			suffix: 'Async',
+
+			// 默认方法
 			actions: {
 				'get': { method: 'GET' },
 				'save': { method: 'POST' },
