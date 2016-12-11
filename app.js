@@ -1,3 +1,4 @@
+import WxValidate from 'helpers/WxValidate'
 import HttpResource from 'helpers/HttpResource'
 import HttpService from 'helpers/HttpService'
 import WxService from 'helpers/WxService'
@@ -48,6 +49,7 @@ App({
         if (path.indexOf('http') !== -1) return path
         return `${this.Config.fileBasePath}${path}`
     },
+	WxValidate: WxValidate, 
 	HttpResource: HttpResource, 
 	HttpService: new HttpService, 
 	WxService: new WxService, 

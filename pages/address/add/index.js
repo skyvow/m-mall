@@ -23,6 +23,23 @@ Page({
         ],
     },
     onLoad() {
+    	this.WxValidate = new App.WxValidate(this, {
+			'form.name': {
+				required: '收货人姓名必填。', 
+				minlength: 2, 
+				maxlength: 10, 
+			},
+			'form.tel': {
+				required: '收货人电话必填。', 
+				tel: true, 
+			},
+			'form.address': {
+				required: '收货人地址必填。', 
+				minlength: 2, 
+				maxlength: 100, 
+			},
+		})
+
         this.address = new App.HttpResource('/address/:id', {id: '@id'})
     },
     radioChange(e) {
@@ -52,6 +69,17 @@ Page({
 		setTimeout(() => {
 			const params = this.data.form
 			console.log(params)
+
+			if (!this.WxValidate.checkForm()) {
+				const error = this.WxValidate.errorList[0]
+				App.WxService.showModal({
+					title: '友情提示', 
+  					content: `${error.param} : ${error.msg}`, 
+  					showCancel: !1, 
+				})
+				return false
+			}
+
 			// App.HttpService.postAddress(params)
 			this.address.saveAsync(params)
 			.then(data => {
