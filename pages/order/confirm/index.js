@@ -37,7 +37,7 @@ Page({
     },
     redirectTo(e) {
         console.log(e)
-        App.WxService.redirectTo('/pages/address-confirm/index', {
+        App.WxService.redirectTo('/pages/address/confirm/index', {
             ret: this.data.address_id
         })
     },
@@ -63,7 +63,7 @@ Page({
         .then(data => {
             console.log(data)
             if (data.confirm == 1) {
-                App.WxService.redirectTo('/pages/address-add/index')
+                App.WxService.redirectTo('/pages/address/add/index')
             } else {
                 App.WxService.navigateBack()
             }
@@ -97,7 +97,7 @@ Page({
         .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
-                App.WxService.redirectTo('/pages/order-detail/index', {
+                App.WxService.redirectTo('/pages/order/detail/index', {
                     id: data.data._id
                 })
             }
