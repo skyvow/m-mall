@@ -12,6 +12,7 @@
     "pages/order/detail/index",
     "pages/goods/list/index",
     "pages/goods/detail/index",
+    "pages/search/index",
     "pages/user/index"
   ],
   "window": {

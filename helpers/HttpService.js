@@ -9,6 +9,7 @@ class Service extends ServiceBase {
 			banner  : '/banner', 
 			classify: '/classify', 
 			goods   : '/goods', 
+			search  : '/goods/search/all', 
 			cart    : '/cart', 
 			address : '/address', 
 			order   : '/order', 
@@ -21,6 +22,10 @@ class Service extends ServiceBase {
 
 	getBanners(params) {
 		return this.getRequest(this.$$path.banner, params)
+	}
+
+	search(params) {
+		return this.getRequest(this.$$path.search, params)
 	}
 
 	getGoods(params) {

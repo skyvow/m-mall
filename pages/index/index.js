@@ -39,6 +39,9 @@ Page({
             id: e.currentTarget.dataset.id
         })
     },
+    search() {
+        App.WxService.navigateTo('/pages/search/index')
+    },
     getBanners() {
     	// App.HttpService.getBanners({is_show: !0})
         this.banner.queryAsync({is_show: !0})

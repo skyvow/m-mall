@@ -2,8 +2,12 @@
     overflow: hidden;
 }
 
+.weui-icon-search, 
+.weui-search-bar__text {
+    vertical-align: inherit;
+}
+
 .topbar {
-    margin-top: 10px;
     background: #fff;
 }
 

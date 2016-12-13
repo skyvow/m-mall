@@ -7,12 +7,14 @@ Page({
         goods : {},
         prompt: {
             hidden: !0,
+            icon: '../../../assets/images/iconfont-empty.png',
         },
     },
     onLoad(option) {
         this.goods = new App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
-            type: option.type
+            type: option.type, 
+            keyword: decodeURI(option.keyword), 
         })
     },
     onShow() {
@@ -20,6 +22,7 @@ Page({
     },
     initData() {
         const type = this.data.type
+        const keyword = this.data.keyword
 
         this.setData({
             goods: {
@@ -28,6 +31,7 @@ Page({
                     page : 1,
                     limit: 10,
                     type : type,
+                    keyword : keyword,
                 },
                 paginate: {}
             }
