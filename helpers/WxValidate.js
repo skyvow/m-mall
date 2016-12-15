@@ -200,27 +200,27 @@ class WxValidate {
 	 */
 	formatTpl(source, params) {
 		const that = this
-		if ( arguments.length === 1 ) {
+		if (arguments.length === 1) {
 			return function() {
-				let args = Array.from( arguments )
-				args.unshift( source )
-				return that.formatTpl.apply( this, args )
+				let args = Array.from(arguments)
+				args.unshift(source)
+				return that.formatTpl.apply(this, args)
 			}
 		}
-		if ( params === undefined ) {
+		if (params === undefined) {
 			return source
 		}
-		if ( arguments.length > 2 && params.constructor !== Array  ) {
-			params = Array.from( arguments ).slice( 1 )
+		if (arguments.length > 2 && params.constructor !== Array) {
+			params = Array.from(arguments).slice(1)
 		}
-		if ( params.constructor !== Array ) {
+		if (params.constructor !== Array) {
 			params = [ params ]
 		}
-		params.forEach(function( n, i ) {
-			source = source.replace( new RegExp( "\\{" + i + "\\}", "g" ), function() {
+		params.forEach(function(n, i) {
+			source = source.replace(new RegExp("\\{" + i + "\\}", "g"), function() {
 				return n
-			} )
-		} )
+			})
+		})
 		return source
 	}
 
@@ -228,16 +228,19 @@ class WxValidate {
 	 * 判断规则依赖是否存在
 	 */
 	depend(param) {
-		const type = typeof param
-		if (type === 'boolean') {
-			return param
-		} else if (type === 'string') {
-			return !!param.length
-		} else if (type === 'function') {
-			return param()
-		} else {
-			return !0
+		switch(typeof param) {
+			case 'boolean':
+				param = param
+				break
+			case 'string':
+				param = !!param.length
+				break
+			case 'function':
+				param = param()
+			default:
+				param = !0
 		}
+		return param
 	}
 
 	/**
