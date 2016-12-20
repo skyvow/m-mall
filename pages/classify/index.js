@@ -8,7 +8,7 @@ Page({
         },
     },
     onLoad() {
-        this.classify = new App.HttpResource('/classify/:id', {id: '@id'})
+        this.classify = App.HttpResource('/classify/:id', {id: '@id'})
     },
     onShow() {
         this.onPullDownRefresh()

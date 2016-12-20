@@ -7,7 +7,7 @@ Page({
         },
     },
     onLoad(option) {
-        this.order = new App.HttpResource('/order/:id', {id: '@id'})
+        this.order = App.HttpResource('/order/:id', {id: '@id'})
         this.setData({
             id: option.id
         })

@@ -1,3 +1,4 @@
+import polyfill from 'assets/plugins/polyfill'
 import WxValidate from 'helpers/WxValidate'
 import HttpResource from 'helpers/HttpResource'
 import HttpService from 'helpers/HttpService'

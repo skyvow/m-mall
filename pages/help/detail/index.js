@@ -7,7 +7,7 @@ Page({
         }
     },
     onLoad(option) {
-        this.helps = new App.HttpResource('/help/:id', {id: '@id'})
+        this.helps = App.HttpResource('/help/:id', {id: '@id'})
         this.setData({
             id: option.id
         })

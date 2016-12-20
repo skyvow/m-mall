@@ -25,9 +25,9 @@ Page({
         // console.log(e.detail.current)
     },
     onLoad() {
-        this.banner = new App.HttpResource('/banner/:id', {id: '@id'})
-        this.goods = new App.HttpResource('/goods/:id', {id: '@id'})
-        this.classify = new App.HttpResource('/classify/:id', {id: '@id'})
+        this.banner = App.HttpResource('/banner/:id', {id: '@id'})
+        this.goods = App.HttpResource('/goods/:id', {id: '@id'})
+        this.classify = App.HttpResource('/classify/:id', {id: '@id'})
     },
     onShow() {
         this.getBanners()

@@ -11,7 +11,7 @@ Page({
         },
     },
     onLoad(option) {
-        this.goods = new App.HttpResource('/goods/:id', {id: '@id'})
+        this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
             type: option.type, 
             keyword: decodeURI(option.keyword), 

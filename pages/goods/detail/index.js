@@ -15,7 +15,7 @@ Page({
         // console.log(e.detail.current)
     },
     onLoad(option) {
-        this.goods = new App.HttpResource('/goods/:id', {id: '@id'})
+        this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
             id: option.id
         })

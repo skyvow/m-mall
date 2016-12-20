@@ -5,10 +5,11 @@ Page({
         helps: {},
         prompt: {
             hidden: !0,
+            icon: '../../../assets/images/iconfont-empty.png',
         },
     },
     onLoad() {
-        this.helps = new App.HttpResource('/help/:id', {id: '@id'})
+        this.helps = App.HttpResource('/help/:id', {id: '@id'})
     },
     onShow() {
         this.onPullDownRefresh()
