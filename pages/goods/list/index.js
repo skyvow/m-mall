@@ -14,11 +14,18 @@ Page({
         this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
             type: option.type, 
-            keyword: decodeURI(option.keyword), 
+            keyword: option.keyword && decodeURI(option.keyword), 
         })
     },
     onShow() {
         this.onPullDownRefresh()
+    },
+    onReady() {
+        const keyword = this.data.keyword
+        
+        keyword && App.WxService.setNavigationBarTitle({
+            title: `搜索商品：${keyword}`, 
+        })
     },
     initData() {
         const type = this.data.type

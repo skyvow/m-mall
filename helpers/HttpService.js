@@ -5,17 +5,27 @@ class Service extends ServiceBase {
 		super()
 		this.$$prefix = ''
 		this.$$path = {
-			signIn  : '/user/sign/in',
-			banner  : '/banner', 
-			classify: '/classify', 
-			goods   : '/goods', 
-			search  : '/goods/search/all', 
-			cart    : '/cart', 
-			address : '/address', 
-			order   : '/order', 
+			wechatSignUp: '/user/wechat/sign/up',
+			wechatSignIn: '/user/wechat/sign/in',
+			signIn      : '/user/sign/in',
+			banner      : '/banner', 
+			classify    : '/classify', 
+			goods       : '/goods', 
+			search      : '/goods/search/all', 
+			cart        : '/cart', 
+			address     : '/address', 
+			order       : '/order', 
         }
 	}
 
+	wechatSignUp(params) {
+		return this.postRequest(this.$$path.wechatSignUp, params)
+	}
+
+	wechatSignIn(params) {
+		return this.postRequest(this.$$path.wechatSignIn, params)
+	}
+	
 	signIn(params) {
 		return this.postRequest(this.$$path.signIn, params) 
 	}

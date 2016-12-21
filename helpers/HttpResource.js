@@ -10,9 +10,10 @@ const interceptors = [{
             request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
         }
 		wx.showToast({
-			title: '加载中',
-			icon: 'loading',
-			duration: 10000
+			title   : '加载中', 
+			icon    : 'loading', 
+			duration: 10000, 
+			mask    : !0, 
 		})
 		return request
 	},
