@@ -23,8 +23,10 @@ Page({
         const index = e.currentTarget.dataset.index
         
         switch(index) {
-            case '0':
-                App.WxService.navigateBack()
+            case 0:
+                App.WxService.switchTab({
+                    url: '/pages/index/index'
+                })
                 break
             default:
                 break
