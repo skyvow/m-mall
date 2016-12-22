@@ -23,7 +23,7 @@ Page({
         ],
     },
     onLoad() {
-    	this.WxValidate = new App.WxValidate({
+    	this.WxValidate = App.WxValidate({
 			name: {
 				required: true, 
 				minlength: 2, 

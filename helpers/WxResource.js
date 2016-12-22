@@ -70,7 +70,7 @@ import es6 from '../assets/plugins/es6-promise'
  * ```
  */
 class Resource {
-    constructor(url, paramDefaults, actions, options) {
+    constructor(url = '', paramDefaults = {}, actions = {}, options = {}) {
     	Object.assign(this, {
     		url, 
     		paramDefaults, 
