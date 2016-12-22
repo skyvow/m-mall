@@ -5,10 +5,11 @@ Page({
         activeIndex: 0,
         navList: [],
         indicatorDots: !0,
-        vertical: !1,
         autoplay: !1,
+        current: 0,
         interval: 3000,
         duration: 1000,
+        circular: !0,
         goods: {
             items: [],
             params: {

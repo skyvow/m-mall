@@ -17,6 +17,7 @@
     "pages/help/detail/index",
     "pages/search/index",
     "pages/about/index",
+    "pages/login/index",
     "pages/user/index"
   ],
   "window": {

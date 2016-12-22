@@ -56,6 +56,9 @@ class HttpResource {
 				response.responseTimestamp = new Date().getTime()
 				if(response.statusCode === 401) {
 					wx.removeStorageSync('token')
+					wx.redirectTo({
+			    		url: '/pages/login/index'
+			    	})
 				}
 				wx.hideToast()
 				return response
