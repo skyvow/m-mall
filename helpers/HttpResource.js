@@ -34,40 +34,40 @@ class HttpResource {
 	 */
 	setInterceptors() {
 		return [{
-			request: function(request) {
-				request.header = request.header || {}
-				request.requestTimestamp = new Date().getTime()
-				if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
-		            request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
-		        }
-				wx.showToast({
-					title   : '加载中', 
-					icon    : 'loading', 
-					duration: 10000, 
-					mask    : !0, 
-				})
-				return request
-			},
-			requestError: function(requestError) {
-				wx.hideToast()
-				return requestError
-			},
-			response: function(response) {
-				response.responseTimestamp = new Date().getTime()
-				if(response.statusCode === 401) {
-					wx.removeStorageSync('token')
-					wx.redirectTo({
-			    		url: '/pages/login/index'
-			    	})
-				}
-				wx.hideToast()
-				return response
-			},
-			responseError: function(responseError) {
-				wx.hideToast()
-				return responseError
-			},
-		}]
+            request: (request) => {
+                request.header = request.header || {}
+                request.requestTimestamp = new Date().getTime()
+                if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
+                    request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
+                }
+                wx.showToast({
+                    title: '加载中', 
+                    icon: 'loading', 
+                    duration: 10000, 
+                    mask: !0, 
+                })
+                return request
+            },
+            requestError: (requestError) => {
+                wx.hideToast()
+                return requestError
+            },
+            response: (response) => {
+                response.responseTimestamp = new Date().getTime()
+                if(response.statusCode === 401) {
+                    wx.removeStorageSync('token')
+                    wx.redirectTo({
+                        url: '/pages/login/index'
+                    })
+                }
+                wx.hideToast()
+                return response
+            },
+            responseError: (responseError) => {
+                wx.hideToast()
+                return responseError
+            },
+        }]
 	}
 }
 

@@ -58,14 +58,14 @@ import es6 from '../assets/plugins/es6-promise'
 	 
 	// 返回的实例对象包含六个默认方法，getAsync、saveAsync、queryAsync、removeAsync、deleteAsync与一个自定义方法listAsync
 	//
-	// user.getAsync({id: 123}, successFn, errorFn) 向/api/users/123发起一个GET请求，params作为填充url中变量，一般用来请求某个指定资源
-	// user.queryAsync(params, successFn, errorFn) 同getAsync()方法使用类似，一般用来请求多个资源
-	// user.saveAsync(params, payload, successFn, errorFn) 发起一个POST请，payload作为请求体，一般用来新建一个资源
-	// user.updateAsync(params, payload, successFn, errorFn) 发起一个PUT请，payload作为请求体，一般用来更新某个指定资源
-	// user.deleteAsync(params, payload, successFn, errorFn) 发起一个DELETE请求，payload作为请求体，一般用来移除某个指定资源
-	// user.removeAsync(params, payload, successFn, errorFn) 同deleteAsync()方法使用类似，一般用来移除多个资源
+	// user.getAsync({id: 123}) 向/api/users/123发起一个GET请求，params作为填充url中变量，一般用来请求某个指定资源
+	// user.queryAsync(params) 同getAsync()方法使用类似，一般用来请求多个资源
+	// user.saveAsync(params, payload) 发起一个POST请，payload作为请求体，一般用来新建一个资源
+	// user.updateAsync(params, payload) 发起一个PUT请，payload作为请求体，一般用来更新某个指定资源
+	// user.deleteAsync(params, payload) 发起一个DELETE请求，payload作为请求体，一般用来移除某个指定资源
+	// user.removeAsync(params, payload) 同deleteAsync()方法使用类似，一般用来移除多个资源
 	//
-	// user.listAsync({}, successFn, errorFn) 向/api/users发送一个GET请求
+	// user.listAsync({}) 向/api/users发送一个GET请求
 
  * ```
  */
@@ -232,16 +232,16 @@ class Resource {
     	this.defaults = {
     		// 拦截器
     		interceptors: [{
-    			request: function(request) {
+    			request: (request) => {
     				return request
     			},
-    			requestError: function(requestError) {
+    			requestError: (requestError) => {
     				return requestError
     			},
-    			response: function(response) {
+    			response: (response) => {
     				return response
     			},
-    			responseError: function(responseError) {
+    			responseError: (responseError) => {
     				return responseError
     			},
     		}],
@@ -352,31 +352,48 @@ class Resource {
      * __initResource
      */
     __initResource() {
-    	const that = this
+    	const route = this.__initRoute(this.url, this.options)
+    	const actions = this.__tools.extend({}, this.defaults.actions, this.actions)
+
+    	for(let name in actions) {
+    		this[name + route.defaults.suffix] = (...args) => {
+				const httpConfig = this.__setHttpConfig(route, actions[name], ...args)
+				return this.__defaultRequest(httpConfig)
+    		}
+    	}
+    }
+
+    /**
+     * 设置httpConfig
+     */
+    __setHttpConfig(route, action, ...args) {
     	const MEMBER_NAME_REGEX = /^(\.[a-zA-Z_$@][0-9a-zA-Z_$@]*)+$/
     	
+    	// 判断是否为有效的路径
 		const isValidDottedPath = (path) => {
 			return (path != null && path !== '' && path !== 'hasOwnProperty' && MEMBER_NAME_REGEX.test('.' + path))
 		}
 
+		// 查找路径
 		const lookupDottedPath = (obj, path) => {
 			if (!isValidDottedPath(path)) {
 				throw `badmember, Dotted member path ${path} is invalid.`
 			}
 			let keys = path.split('.')
-			for (let i = 0, ii = keys.length; i < ii && that.__tools.isDefined(obj); i++) {
+			for (let i = 0, ii = keys.length; i < ii && this.__tools.isDefined(obj); i++) {
 				let key = keys[i]
 				obj = (obj !== null) ? obj[key] : undefined
 			}
 			return obj
 		}
 
+		// 提取参数
 		const extractParams = (data, actionParams) => {
 			let ids = {}
-			actionParams = that.__tools.extend({}, that.paramDefaults, actionParams)
+			actionParams = this.__tools.extend({}, this.paramDefaults, actionParams)
 			for(let key in actionParams) {
 				let value = actionParams[key]
-				if (that.__tools.isFunction(value)) { 
+				if (this.__tools.isFunction(value)) { 
 					value = value(data) 
 				}
 				ids[key] = value && value.charAt && value.charAt(0) === '@' ? lookupDottedPath(data, value.substr(1)) : value
@@ -384,7 +401,52 @@ class Resource {
 			return ids
         }
 
-        const chainInterceptors = (promise, interceptors) => {
+    	let params = {}, data = {}, httpConfig = {}, hasBody = /^(POST|PUT|PATCH)$/i.test(action.method)
+
+    	// 判断参数个数
+		switch (args.length) {
+			case 2:
+				params = args[0]
+				data = args[1]
+				break
+			case 1:
+				if (hasBody) data = args[0]
+				else params = args[0]
+				break
+			case 0: break
+			default:
+				throw `Expected up to 2 arguments [params, data, success, error], got ${args.length} arguments`
+		}
+
+		// 设置httpConfig
+		for(let key in action) {
+			switch (key) {
+				default:
+					httpConfig[key] = this.__tools.clone(action[key])
+					break
+				case 'params':
+					break
+			}
+		}
+
+		// 判断是否为(POST|PUT|PATCH)请求，设置请求data
+		if (hasBody) {
+			httpConfig.data = data
+		}
+
+		// 解析URL
+		route.setUrlParams(httpConfig, this.__tools.extend({}, extractParams(data, action.params || {}), params), action.url)
+
+		return httpConfig
+    }
+
+    /**
+     * 以wx.request作为底层方法
+     * @param {Object} httpConfig 请求参数配置
+     */
+    __defaultRequest(httpConfig) {
+    	// 注入拦截器
+    	const chainInterceptors = (promise, interceptors) => {
 			for (let i = 0, ii = interceptors.length; i < ii;) {
 				let thenFn = interceptors[i++]
 				let rejectFn = interceptors[i++]
@@ -393,98 +455,40 @@ class Resource {
 			return promise
 		}
 
-    	const route = that.__initRoute(that.url, that.options)
-    	const actions = that.__tools.extend({}, that.defaults.actions, that.actions)
+		let requestInterceptors = []
+		let responseInterceptors = []
+		let reversedInterceptors = this.defaults.interceptors
+		let promise = this.__resolve(httpConfig)
 
-    	for(let name in actions) {
-    		const action = actions[name]
-    		const hasBody = /^(POST|PUT|PATCH)$/i.test(action.method)
+		// 缓存拦截器
+		reversedInterceptors.forEach((n, i) => {
+			if (n.request || n.requestError) {
+				requestInterceptors.push(n.request, n.requestError)
+			}
+			if (n.response || n.responseError) {
+				responseInterceptors.unshift(n.response, n.responseError)
+			}
+		})
 
-    		that[name + route.defaults.suffix] = function(a1, a2, a3, a4) {
-    			let params = {}, data, success, error, httpConfig = {}, noop = function() {}
+		// 注入请求拦截器
+        promise = chainInterceptors(promise, requestInterceptors)
 
-				switch (arguments.length) {
-					case 4:
-						error = a4
-						success = a3
-					case 3:
-					case 2:
-						if (that.__tools.isFunction(a2)) {
-							if (that.__tools.isFunction(a1)) {
-								success = a1
-								error = a2
-								break
-							}
+        // 发起HTTPS请求
+        promise = promise.then(this.__http)
 
-							success = a2
-							error = a3
-						} else {
-							params = a1
-							data = a2
-							success = a3
-							break
-						}
-					case 1:
-						if (that.__tools.isFunction(a1)) success = a1
-						else if (hasBody) data = a1
-						else params = a1
-						break
-					case 0: break
-					default:
-						throw `Expected up to 4 arguments [params, data, success, error], got ${arguments.length} arguments`
-				}
+        // 注入响应拦截器
+        promise = chainInterceptors(promise, responseInterceptors)
 
-				for(let key in action) {
-					switch (key) {
-						default:
-							httpConfig[key] = that.__tools.clone(action[key])
-							break
-						case 'params':
-							break
-					}
-				}
+        // 接口调用成功，res = {data: '开发者服务器返回的内容'}
+        promise = promise.then(res => res.data, err => err)
 
-				if (hasBody) {
-					httpConfig.data = data
-				}
-				
-				route.setUrlParams(httpConfig, that.__tools.extend({}, extractParams(data, action.params || {}), params), action.url)
-				
-				let requestInterceptors = []
-     			let responseInterceptors = []
-     			let reversedInterceptors = that.defaults.interceptors
-     			let promise = that.$resolve(httpConfig)
-
-     			reversedInterceptors.forEach((n, i) => {
-					if (n.request || n.requestError) {
-						requestInterceptors.push(n.request, n.requestError)
-					}
-					if (n.response || n.responseError) {
-						responseInterceptors.unshift(n.response, n.responseError)
-					}
-				})
-
-				promise = chainInterceptors(promise, requestInterceptors)
-				promise = promise.then(that.$http)
-				promise = chainInterceptors(promise, responseInterceptors)
-
-				promise = promise.then(res => {
-					(success || noop)(res.data)
-					return res.data
-				}, res => {
-					(error || noop)(res.data)
-					return res.data
-				})
-
-				return promise
-    		}
-    	}
+		return promise	
     }
 
     /**
-     * $http - wx.request
+     * __http - wx.request
      */
-    $http(obj) {
+    __http(obj) {
 		return new es6.Promise((resolve, reject) => {
 			obj.success = (res) => resolve(res)
 			obj.fail = (res) => reject(res)
@@ -493,18 +497,18 @@ class Resource {
 	}
 
 	/**
-	 * $resolve
+	 * __resolve
 	 */
-	$resolve(res) {
+	__resolve(res) {
 		return new es6.Promise((resolve, reject) => {
 			resolve(res)
 		})
 	}
 
 	/**
-	 * $reject
+	 * __reject
 	 */
-	$reject(res) {
+	__reject(res) {
 		return new es6.Promise((resolve, reject) => {
 			reject(res)
 		})
