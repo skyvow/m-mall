@@ -26,5 +26,6 @@
                 </view>
             </navigator>
         </view>
-	</view>
+    </view>
+    <view class="logout" bindtap="logout">登出账号</view>
 </view>

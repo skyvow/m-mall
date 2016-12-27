@@ -9,6 +9,7 @@ class Service extends ServiceBase {
 			wechatSignIn: '/user/wechat/sign/in',
 			decryptData : '/user/wechat/decrypt/data',
 			signIn      : '/user/sign/in',
+			signOut     : '/user/sign/out',
 			banner      : '/banner', 
 			classify    : '/classify', 
 			goods       : '/goods', 
@@ -33,6 +34,10 @@ class Service extends ServiceBase {
 	
 	signIn(params) {
 		return this.postRequest(this.$$path.signIn, params) 
+	}
+
+	signOut() {
+		return this.postRequest(this.$$path.signOut) 
 	}
 
 	getBanners(params) {

@@ -101,4 +101,21 @@ Page({
 				App.WxService.navigateTo(path)
 		}
     },
+    logout() {
+    	App.WxService.showModal({
+            title: '友情提示', 
+            content: '确定要登出吗？', 
+        })
+        .then(data => data.confirm == 1 && this.signOut())
+    },
+    signOut() {
+    	App.HttpService.signOut()
+    	.then(data => {
+    		console.log(data)
+    		if (data.meta.code == 0) {
+    			App.WxService.removeStorageSync('token')
+    			App.WxService.redirectTo('/pages/login/index')
+    		}
+    	})
+    },
 })

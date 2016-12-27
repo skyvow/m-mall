@@ -27,3 +27,35 @@
 	text-align: center;
 	font-size: 8px;
 }
+
+.logout {
+	position: relative;
+	margin-top: 1.17647059em;
+	line-height: 1.41176471;
+	font-size: 17px;
+	padding: 10px 15px;
+	background: #fff;
+	text-align: center;
+}
+
+.logout:before {
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 1px;
+	border-top: 1rpx solid #D9D9D9;
+	color: #D9D9D9;
+}
+
+.logout:after {
+	content: " ";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 1px;
+	border-bottom: 1rpx solid #D9D9D9;
+	color: #D9D9D9;
+}
