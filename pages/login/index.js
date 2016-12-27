@@ -27,6 +27,28 @@ Page({
             showCancel: !1, 
         })
 	},
+	wechatDecryptData() {
+		let code
+
+		App.WxService.login()
+		.then(data => {
+			console.log('wechatDecryptData', data.code)
+			code = data.code
+			return App.WxService.getUserInfo()
+		})
+		.then(data => {
+			return App.HttpService.wechatDecryptData({
+				encryptedData: data.encryptedData, 
+				iv: data.iv, 
+				rawData: data.rawData, 
+				signature: data.signature, 
+				code: code, 
+			})
+		})
+		.then(data => {
+			console.log(data)
+		})
+	},
 	wechatSignIn(cb) {
 		if (App.WxService.getStorageSync('token')) return
 		App.WxService.login()

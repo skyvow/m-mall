@@ -7,6 +7,7 @@ class Service extends ServiceBase {
 		this.$$path = {
 			wechatSignUp: '/user/wechat/sign/up',
 			wechatSignIn: '/user/wechat/sign/in',
+			decryptData : '/user/wechat/decrypt/data',
 			signIn      : '/user/sign/in',
 			banner      : '/banner', 
 			classify    : '/classify', 
@@ -24,6 +25,10 @@ class Service extends ServiceBase {
 
 	wechatSignIn(params) {
 		return this.postRequest(this.$$path.wechatSignIn, params)
+	}
+
+	wechatDecryptData(params) {
+		return this.postRequest(this.$$path.decryptData, params)
 	}
 	
 	signIn(params) {
