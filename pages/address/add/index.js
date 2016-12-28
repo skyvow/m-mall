@@ -52,6 +52,17 @@ Page({
 
         this.address = App.HttpResource('/address/:id', {id: '@id'})
     },
+	radioChange(e) {		 
+		console.log('radio发生change事件，携带value值为：', e.detail.value)
+		const params = e.detail.value
+		const value = e.detail.value
+		const radio = this.data.radio
+		radio.forEach(n => n.checked = n.value === value)
+		this.setData({
+			radio: radio, 
+			'form.gender': value, 
+		})
+	},
 	submitForm(e) {
 		const params = e.detail.value
 

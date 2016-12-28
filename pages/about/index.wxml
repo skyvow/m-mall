@@ -10,6 +10,6 @@
 	</view>
 	<view class="about-item">
 		<text class="about-item-title">当前版本</text>
-		<text class="about-item-content ">v0.0.3 Beta</text>
+		<text class="about-item-content ">v0.0.7 Beta</text>
 	</view>
 </view>

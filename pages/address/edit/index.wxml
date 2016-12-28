@@ -1,6 +1,6 @@
 <form bindsubmit="submitForm">
     <view class="weui-cells">
-        <radio-group name="gender">
+        <radio-group name="gender" bindchange="radioChange">
             <label class="weui-cell weui-check__label" wx:for="{{ radio }}" wx:key="{{ item.value }}">
                 <radio class="weui-check" value="{{ item.value }}" checked="{{ item.checked }}"/>
                 <view class="weui-cell__bd">{{ item.name }}</view>
