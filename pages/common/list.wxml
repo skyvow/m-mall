@@ -1,7 +1,9 @@
 <import src="../common/prompt.wxml"/>
 
 <template name="list">
-	<scroll-view class="scroll-list" scroll-y="true" style="height: 100%" bindscrolltolower="lower">
+    <template is="prompt" data="{{ prompt }}"/>
+    
+	<view class="scroll-list">
 		<view class="weui-panel weui-panel_access" wx:if="{{ !!goods.paginate.total }}">
             <view class="weui-panel__bd">
                 <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{ goods.items }}" wx:key="" bindtap="navigateTo" data-id="{{ item._id }}">
@@ -17,6 +19,5 @@
                 </navigator>
             </view>
         </view>
-	    <template is="prompt" data="{{ prompt }}"/>
-	</scroll-view>
+	</view>
 </template>

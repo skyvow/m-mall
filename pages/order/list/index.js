@@ -65,7 +65,7 @@ Page({
             id: e.currentTarget.dataset.id
         })
     },
-    getOrderList() {
+    getList() {
         const order = this.data.order
         const params = order.params
 
@@ -86,15 +86,14 @@ Page({
         })
     },
     onPullDownRefresh() {
+        console.info('onPullDownRefresh')
         this.initData()
-        this.getOrderList()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.order.paginate.hasNext) return
-        this.getOrderList()
+        this.getList()
     },
     onTapTag(e) {
         const type = e.currentTarget.dataset.type
@@ -104,6 +103,6 @@ Page({
             activeIndex: index,
             'order.params.type': type,
         })
-        this.getOrderList()
+        this.getList()
     },
 })

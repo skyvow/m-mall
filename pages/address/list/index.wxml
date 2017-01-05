@@ -1,7 +1,9 @@
 <import src="../../common/prompt.wxml"/>
 
 <view class="address-list">
-    <scroll-view class="scroll-list"  scroll-y="true" style="height: 100%" bindscrolltolower="lower">
+    <template is="prompt" data="{{ prompt }}"/>
+    
+    <view class="scroll-list">
         <view class="weui-panel" wx:if="{{ !!address.paginate.total }}">
             <view class="weui-panel__bd">
                 <view class="weui-media-box weui-media-box_text" wx:for="{{ address.items }}" wx:key="">
@@ -17,10 +19,9 @@
                 </view>
             </view>
         </view>
-        <template is="prompt" data="{{ prompt }}"/>
         <view class="btn-plus" bindtap="toAddressAdd">
             <image class="icon" src="../../../assets/images/iconfont-plus-circle.png" />
             <text>新增地址</text>
         </view>
-    </scroll-view>
+    </view>
 </view>

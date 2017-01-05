@@ -32,7 +32,7 @@ Page({
             id: e.currentTarget.dataset.id
         })
     },
-    getHelps() {
+    getList() {
         const helps = this.data.helps
         const params = helps.params
 
@@ -52,14 +52,13 @@ Page({
         })
     },
     onPullDownRefresh() {
+        console.info('onPullDownRefresh')
         this.initData()
-        this.getHelps()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.helps.paginate.hasNext) return
-        this.getHelps()
+        this.getList()
     },
 })

@@ -10,14 +10,7 @@ Page({
         interval: 3000,
         duration: 1000,
         circular: !0,
-        goods: {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-            },
-            paginate: {}
-        },
+        goods: {},
         prompt: {
             hidden: !0,
         },
@@ -33,6 +26,22 @@ Page({
     onShow() {
         this.getBanners()
         this.getClassify()
+    },
+    initData() {
+        const type = this.data.goods.params && this.data.goods.params.type || ''
+        const goods = {
+            items: [],
+            params: {
+                page : 1,
+                limit: 10,
+                type : type,
+            },
+            paginate: {}
+        }
+
+        this.setData({
+            goods: goods
+        })
     },
     navigateTo(e) {
         console.log(e)
@@ -57,6 +66,8 @@ Page({
         })
     },
     getClassify() {
+        const activeIndex = this.data.activeIndex
+
         // App.HttpService.getClassify({
         //     page: 1, 
         //     limit: 4, 
@@ -70,13 +81,13 @@ Page({
             if (data.meta.code == 0) {
                 this.setData({
                     navList: data.data.items,
-                    'goods.params.type': data.data.items[0]._id
+                    'goods.params.type': data.data.items[activeIndex]._id
                 })
-                this.getGoods()
+                this.onPullDownRefresh()
             }
         })
     },
-    getGoods() {
+    getList() {
         const goods = this.data.goods
         const params = goods.params
 
@@ -98,29 +109,14 @@ Page({
         })
     },
     onPullDownRefresh() {
-        const type = this.data.goods.params.type    
-        const goods = {
-            items: [],
-            params: {
-                page : 1,
-                limit: 10,
-                type : type,
-            },
-            paginate: {}
-        }
-
-        this.setData({
-            goods: goods
-        })
-
-        this.getGoods()
+        console.info('onPullDownRefresh')
+        this.initData()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.goods.paginate.hasNext) return
-        this.getGoods()
+        this.getList()
     },
     onTapTag(e) {
         const type = e.currentTarget.dataset.type
@@ -138,6 +134,6 @@ Page({
             activeIndex: index,
             goods: goods,
         })
-        this.getGoods()
+        this.getList()
     },
 })

@@ -48,7 +48,7 @@ Page({
             }
         })
     },
-    getAddressList() {
+    getList() {
         const address = this.data.address
         const params = address.params
 
@@ -69,14 +69,13 @@ Page({
         })
     },
     onPullDownRefresh() {
+        console.info('onPullDownRefresh')
         this.initData()
-        this.getAddressList()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.address.paginate.hasNext) return
-        this.getAddressList()
+        this.getList()
     },
 })

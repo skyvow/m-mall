@@ -3,7 +3,7 @@
 }
 
 .address-list .weui-media-box {
-	padding-left: 35px;
+	padding-left: 44px;
 	padding-right: 35px;
 }
 
@@ -11,8 +11,8 @@
 	position: absolute;
 	top: 50%;
 	right: 15px;
-	width: 20px; 
-    height: 20px;
+	width: 29px; 
+    height: 26px;
     -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
 }
@@ -26,8 +26,8 @@
 	position: absolute;
 	top: 50%;
 	left: 15px;
-	width: 20px; 
-    height: 20px;
+	width: 29px; 
+    height: 26px;
     -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
 }

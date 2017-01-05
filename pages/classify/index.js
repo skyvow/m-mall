@@ -31,7 +31,7 @@ Page({
             type: e.currentTarget.dataset.id
         })
     },
-    getClassify() {
+    getList() {
         const classify = this.data.classify
         const params = classify.params
 
@@ -52,14 +52,13 @@ Page({
         })
     },
     onPullDownRefresh() {
+        console.info('onPullDownRefresh')
         this.initData()
-        this.getClassify()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.classify.paginate.hasNext) return
-        this.getClassify()
+        this.getList()
     },
 })

@@ -1,5 +1,5 @@
 <view class="address-list">
-    <scroll-view class="scroll-list"  scroll-y="true" style="height: 100%" bindscrolltolower="lower">
+    <view class="scroll-list">
         <radio-group class="radio-group" bindchange="radioChange">
             <view class="weui-panel" wx:if="{{ !!address.paginate.total }}">
                 <view class="weui-panel__bd">
@@ -16,11 +16,8 @@
                 </view>
             </view>
         </radio-group>
-        <loading hidden="{{ hidden }}">
-            加载中...
-        </loading>
         <view class="weui-loadmore weui-loadmore_line" wx:if="{{ !address.paginate.total }}">
             <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多数据了</view>
         </view>
-    </scroll-view>
+    </view>
 </view>

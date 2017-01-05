@@ -50,7 +50,7 @@ Page({
             id: e.currentTarget.dataset.id
         })
     },
-    getGoods() {
+    getList() {
         const goods = this.data.goods
         const params = goods.params
 
@@ -72,14 +72,13 @@ Page({
         })
     },
     onPullDownRefresh() {
+        console.info('onPullDownRefresh')
         this.initData()
-        this.getGoods()
+        this.getList()
     },
     onReachBottom() {
-        this.lower()
-    },
-    lower() {
+        console.info('onReachBottom')
         if (!this.data.goods.paginate.hasNext) return
-        this.getGoods()
+        this.getList()
     },
 })

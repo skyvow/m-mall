@@ -1,5 +1,7 @@
 <import src="../common/prompt.wxml"/>
 
+<template is="prompt" data="{{ prompt }}"/>
+
 <view class="weui-panel weui-panel_access" wx:if="{{ !!carts.items.length }}" wx:for="{{ carts.items }}" wx:key="">
     <view class="weui-panel__hd">
         <text class="info-meta" wx:if="{{ !canEdit }}" data-value="edit" bindtap="onTapEdit">编辑</text>
@@ -32,8 +34,6 @@
         </navigator>
     </view>
 </view>
-    
-<template is="prompt" data="{{ prompt }}"/>
 
 <view class="button-sp-area" wx:if="{{ !!carts.items.length }}">
     <button class="weui-btn" type="primary" bindtap="confirmOrder">去结算</button>

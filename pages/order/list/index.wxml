@@ -2,8 +2,9 @@
 <import src="../../common/prompt.wxml"/>
 
 <template is="nav" data="{{ navList, activeIndex }}"/>
+<template is="prompt" data="{{ prompt }}"/>
 
-<scroll-view class="scroll-list" scroll-y="true" style="height: 100%" bindscrolltolower="lower">
+<view class="scroll-list">
     <view class="weui-form-preview" wx:if="{{ !!order.paginate.total }}" wx:for="{{ order.items }}" wx:key="" bindtap="navigateTo" data-id="{{ item._id }}">
         <view class="weui-form-preview__hd">
             <view class="weui-form-preview__item">
@@ -22,6 +23,4 @@
             <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">再来一单</navigator>
         </view>
     </view>
-
-    <template is="prompt" data="{{ prompt }}"/>
-</scroll-view>
+</view>
