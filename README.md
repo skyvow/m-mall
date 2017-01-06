@@ -240,6 +240,8 @@ Page({
 
 <img src="https://github.com/skyvow/m-mall/blob/master/assets/images/screenshots/screenshorts-06.png" width="375px" style="display:inline;">
 
+<img src="https://github.com/skyvow/m-mall/blob/master/assets/images/screenshots/screenshorts-14.png" width="375px" style="display:inline;">
+
 <img src="https://github.com/skyvow/m-mall/blob/master/assets/images/screenshots/screenshorts-07.png" width="375px" style="display:inline;">
 
 <img src="https://github.com/skyvow/m-mall/blob/master/assets/images/screenshots/screenshorts-08.png" width="375px" style="display:inline;">
