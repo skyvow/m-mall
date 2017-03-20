@@ -10,8 +10,6 @@ Page({
     },
     onLoad() {
         this.helps = App.HttpResource('/help/:id', {id: '@id'})
-    },
-    onShow() {
         this.onPullDownRefresh()
     },
     initData() {

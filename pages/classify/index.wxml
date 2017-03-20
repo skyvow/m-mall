@@ -1,12 +1,21 @@
-<import src="../common/prompt.wxml"/>
+<import src="../common/list.wxml"/>
 
-<template is="prompt" data="{{ prompt }}"/>
-
-<view class="scroll-list">
-	<view class="weui-cells" wx:if="{{ !!classify.paginate.total }}">
-	    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:for="{{ classify.items }}" wx:key="" bindtap="navigateTo" data-id="{{ item._id }}">
-	        <view class="weui-cell__bd">{{ item.name }}</view>
-	        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-	    </navigator>
+<view class="classify">
+	<view class="nav_left" bindscrolltolower="getMore" bindscrolltoupper="onRefresh">
+		<scroll-view scroll-y="true" style="height: {{ deviceHeight + 'px' }}">
+      		<view bindtap="changeTab" data-index="{{ index }}" data-id="{{ item._id }}" class="nav_left_item {{ activeIndex === index ? 'active' : '' }}" wx:for="{{ classify.items }}" wx:key="">
+      			{{ item.name }}
+      		</view>
+   		 </scroll-view>
+	</view>
+	<view class="nav_right">
+		<view class="title">
+			{{ classify.items[activeIndex].name }}
+		</view>
+		<view class="content">
+			<scroll-view scroll-y="true" style="height: {{ (deviceHeight - 49) + 'px' }}" bindscrolltolower="getMoreGoods" bindscrolltoupper="onRefreshGoods">
+				<template is="list" data="{{ goods, prompt }}"/>
+			</scroll-view>
+		</view>
 	</view>
 </view>

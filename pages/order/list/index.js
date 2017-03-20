@@ -38,8 +38,6 @@ Page({
                 },
             ]
         })
-    },
-    onShow() {
         this.onPullDownRefresh()
     },
     initData() {

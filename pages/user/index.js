@@ -40,8 +40,6 @@ Page({
 	},
 	onLoad() {
 		this.getUserInfo()
-	},
-	onShow() {
 		this.getStorageInfo()
 	},
 	navigateTo(e) {

@@ -12,8 +12,6 @@ Page({
     },
     onLoad() {
         this.address = App.HttpResource('/address/:id', {id: '@id'})
-    },
-    onShow() {
         this.onPullDownRefresh()
     },
     initData() {

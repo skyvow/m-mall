@@ -7,12 +7,15 @@ Page({
         autoplay: !1,
         interval: 3000,
         duration: 1000,
+        current: 0,
         goods: {
             item: {}
         }
     },
     swiperchange(e) {
-        // console.log(e.detail.current)
+        this.setData({
+            current: e.detail.current, 
+        })
     },
     onLoad(option) {
         this.goods = App.HttpResource('/goods/:id', {id: '@id'})
@@ -58,7 +61,8 @@ Page({
         	if (data.meta.code == 0) {
                 data.data.images.forEach(n => n.path = App.renderImage(n.path))
         		this.setData({
-                    'goods.item': data.data
+                    'goods.item': data.data, 
+                    total: data.data.images.length, 
                 })
         	}
         })

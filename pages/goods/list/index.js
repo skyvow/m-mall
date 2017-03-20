@@ -16,8 +16,6 @@ Page({
             type: option.type, 
             keyword: option.keyword && decodeURI(option.keyword), 
         })
-    },
-    onShow() {
         this.onPullDownRefresh()
     },
     onReady() {

@@ -10,8 +10,6 @@ Page({
         this.setData({
             ret: option.ret
         })
-    },
-    onShow() {
         this.onPullDownRefresh()
     },
     initData() {
