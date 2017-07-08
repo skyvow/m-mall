@@ -43,7 +43,8 @@ Page({
     },
     getDefalutAddress() {
         App.HttpService.getDefalutAddress()
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.setData({
@@ -71,7 +72,8 @@ Page({
     },
     getAddressDetail(id) {
         App.HttpService.getAddressDetail(id)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.setData({
@@ -94,7 +96,8 @@ Page({
         })
         console.log(params)
         App.HttpService.postOrder(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 App.WxService.redirectTo('/pages/order/detail/index', {
@@ -105,7 +108,8 @@ Page({
     },
     clear() {
         App.HttpService.clearCartByUser()
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
         })
     },

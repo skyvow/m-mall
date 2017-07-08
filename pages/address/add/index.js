@@ -80,8 +80,9 @@ Page({
 
 		// App.HttpService.postAddress(params)
 		this.address.saveAsync(params)
-		.then(data => {
-			console.log(data)
+		.then(res => {
+            const data = res.data
+            console.log(data)
 			if (data.meta.code == 0) {
 				this.showToast(data.meta.message)
 			}

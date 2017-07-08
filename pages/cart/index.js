@@ -19,14 +19,12 @@ Page({
             ],
         },
     },
-    bindtap: function(e) {
+    bindtap(e) {
         const index = e.currentTarget.dataset.index
         
         switch(index) {
             case 0:
-                App.WxService.switchTab({
-                    url: '/pages/index/index'
-                })
+                App.WxService.switchTab('/pages/index/index')
                 break
             default:
                 break
@@ -39,7 +37,8 @@ Page({
     },
     getCarts() {
         App.HttpService.getCartByUser()
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 data.data.forEach(n => n.goods.thumb_url = App.renderImage(n.goods.images[0] && n.goods.images[0].path))
@@ -74,7 +73,8 @@ Page({
         .then(data => {
             if (data.confirm == 1) {
                 App.HttpService.delCartByUser(id)
-                .then(data => {
+                .then(res => {
+                    const data = res.data
                     console.log(data)
                     if (data.meta.code == 0) {
                         this.getCarts()
@@ -91,7 +91,8 @@ Page({
         .then(data => {
             if (data.confirm == 1) {
                 App.HttpService.clearCartByUser()
-                .then(data => {
+                .then(res => {
+                    const data = res.data
                     console.log(data)
                     if (data.meta.code == 0) {
                         this.getCarts()
@@ -115,7 +116,8 @@ Page({
     },
     putCartByUser(id, params) {
         App.HttpService.putCartByUser(id, params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.getCarts()

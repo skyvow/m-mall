@@ -16,9 +16,7 @@ Page({
     	this.signIn(this.goIndex)
     },
     goIndex() {
-    	App.WxService.switchTab({
-    		url: '/pages/index/index'
-    	})
+    	App.WxService.switchTab('/pages/index/index')
     },
 	showModal() {
 		App.WxService.showModal({
@@ -46,7 +44,7 @@ Page({
 			})
 		})
 		.then(data => {
-			console.log(data)
+            console.log(data)
 		})
 	},
 	wechatSignIn(cb) {
@@ -58,7 +56,8 @@ Page({
 				code: data.code
 			})
 		})
-		.then(data => {
+		.then(res => {
+			const data = res.data
 			console.log('wechatSignIn', data)
 			if (data.meta.code == 0) {
 				App.WxService.setStorageSync('token', data.data.token)
@@ -78,7 +77,8 @@ Page({
 				code: data.code
 			})
 		})
-		.then(data => {
+		.then(res => {
+			const data = res.data
 			console.log('wechatSignUp', data)
 			if (data.meta.code == 0) {
 				App.WxService.setStorageSync('token', data.data.token)
@@ -94,8 +94,9 @@ Page({
 			username: 'admin', 
 			password: '123456', 
 		})
-		.then(data => {
-			console.log(data)
+		.then(res => {
+            const data = res.data
+            console.log(data)
 			if (data.meta.code == 0) {
 				App.WxService.setStorageSync('token', data.data.token)
 				cb()

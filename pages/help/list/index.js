@@ -35,7 +35,8 @@ Page({
         const params = helps.params
 
         this.helps.queryAsync(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 helps.items = [...helps.items, ...data.data.items]

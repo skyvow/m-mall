@@ -61,8 +61,9 @@ Page({
     renderForm(id) {
     	// App.HttpService.getAddressDetail(id)
     	this.address.getAsync({id: id})
-		.then(data => {
-			console.log(data)
+		.then(res => {
+            const data = res.data
+            console.log(data)
 			if (data.meta.code == 0) {
 				const params = {
 					name   : data.data.name, 
@@ -112,8 +113,9 @@ Page({
 
 		// App.HttpService.putAddress(id, params)
 		this.address.updateAsync({id: id}, params)
-		.then(data => {
-			console.log(data)
+		.then(res => {
+            const data = res.data
+            console.log(data)
 			if (data.meta.code == 0) {
 				this.showToast(data.meta.message)
 			}
@@ -122,8 +124,9 @@ Page({
 	delete() {
 		// App.HttpService.deleteAddress(this.data.id)
 		this.address.deleteAsync({id: this.data.id})
-		.then(data => {
-			console.log(data)
+		.then(res => {
+            const data = res.data
+            console.log(data)
 			if (data.meta.code == 0) {
 				this.showToast(data.meta.message)
 			}

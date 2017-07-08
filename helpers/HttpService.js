@@ -1,8 +1,8 @@
-import ServiceBase from 'ServiceBase'
+import WxRequest from '../assets/plugins/wx-request/lib/index'
 
-class Service extends ServiceBase {
-	constructor() {
-		super()
+class HttpService extends WxRequest {
+	constructor(options) {
+		super(options)
 		this.$$prefix = ''
 		this.$$path = {
 			wechatSignUp: '/user/wechat/sign/up',
@@ -18,22 +18,61 @@ class Service extends ServiceBase {
 			address     : '/address', 
 			order       : '/order', 
         }
+        this.interceptors.use({
+            request(request) {
+            	request.header = request.header || {}
+            	request.header['content-type'] = 'application/json'
+                if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
+                    request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
+                }
+                wx.showLoading({
+                    title: '加载中', 
+                })
+                return request
+            },
+            requestError(requestError) {
+            	wx.hideLoading()
+                return Promise.reject(requestError)
+            },
+            response(response) {
+            	wx.hideLoading()
+            	if(response.statusCode === 401) {
+                    wx.removeStorageSync('token')
+                    wx.redirectTo({
+                        url: '/pages/login/index'
+                    })
+                }
+                return response
+            },
+            responseError(responseError) {
+            	wx.hideLoading()
+                return Promise.reject(responseError)
+            },
+        })
 	}
 
 	wechatSignUp(params) {
-		return this.postRequest(this.$$path.wechatSignUp, params)
+		return this.postRequest(this.$$path.wechatSignUp, {
+			data: params,
+		})
 	}
 
 	wechatSignIn(params) {
-		return this.postRequest(this.$$path.wechatSignIn, params)
+		return this.postRequest(this.$$path.wechatSignIn, {
+			data: params,
+		})
 	}
 
 	wechatDecryptData(params) {
-		return this.postRequest(this.$$path.decryptData, params)
+		return this.postRequest(this.$$path.decryptData, {
+			data: params,
+		})
 	}
 	
 	signIn(params) {
-		return this.postRequest(this.$$path.signIn, params) 
+		return this.postRequest(this.$$path.signIn, {
+			data: params,
+		}) 
 	}
 
 	signOut() {
@@ -41,19 +80,27 @@ class Service extends ServiceBase {
 	}
 
 	getBanners(params) {
-		return this.getRequest(this.$$path.banner, params)
+		return this.getRequest(this.$$path.banner, {
+			data: params,
+		})
 	}
 
 	search(params) {
-		return this.getRequest(this.$$path.search, params)
+		return this.getRequest(this.$$path.search, {
+			data: params,
+		})
 	}
 
 	getGoods(params) {
-		return this.getRequest(this.$$path.goods, params)
+		return this.getRequest(this.$$path.goods, {
+			data: params,
+		})
 	}
 
 	getClassify(params) {
-		return this.getRequest(this.$$path.classify, params)
+		return this.getRequest(this.$$path.classify, {
+			data: params,
+		})
 	}
 
 	getDetail(id) {
@@ -66,12 +113,16 @@ class Service extends ServiceBase {
 
 	addCartByUser(goods) {
 		return this.postRequest(this.$$path.cart, {
-			goods: goods, 
+			data: {
+				goods,
+			},
 		})
 	}
 
 	putCartByUser(id, params) {
-		return this.putRequest(`${this.$$path.cart}/${id}`, params)
+		return this.putRequest(`${this.$$path.cart}/${id}`, {
+			data: params,
+		})
 	}
 
 	delCartByUser(id) {
@@ -83,7 +134,9 @@ class Service extends ServiceBase {
 	}
 
 	getAddressList(params) {
-		return this.getRequest(this.$$path.address, params)
+		return this.getRequest(this.$$path.address, {
+			data: params,
+		})
 	}
 
 	getAddressDetail(id) {
@@ -95,7 +148,9 @@ class Service extends ServiceBase {
 	}
 
 	putAddress(id, params) {
-		return this.putRequest(`${this.$$path.address}/${id}`, params)
+		return this.putRequest(`${this.$$path.address}/${id}`, {
+			data: params,
+		})
 	}
 
 	deleteAddress(id, params) {
@@ -111,7 +166,9 @@ class Service extends ServiceBase {
 	}
 
 	getOrderList(params) {
-		return this.getRequest(this.$$path.order, params)
+		return this.getRequest(this.$$path.order, {
+			data: params,
+		})
 	}
 
 	getOrderDetail(id) {
@@ -119,11 +176,15 @@ class Service extends ServiceBase {
 	}
 
 	postOrder(params) {
-		return this.postRequest(this.$$path.order, params)
+		return this.postRequest(this.$$path.order, {
+			data: params,
+		})
 	}
 
 	putOrder(id, params) {
-		return this.putRequest(`${this.$$path.order}/${id}`, params)
+		return this.putRequest(`${this.$$path.order}/${id}`, {
+			data: params,
+		})
 	}
 
 	deleteOrder(id, params) {
@@ -131,4 +192,4 @@ class Service extends ServiceBase {
 	}
 }
 
-export default Service
+export default HttpService

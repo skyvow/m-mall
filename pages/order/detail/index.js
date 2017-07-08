@@ -18,7 +18,8 @@ Page({
     getOrderDetail(id) {
         // App.HttpService.getOrderDetail(id)
         this.order.getAsync({id: id})
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.setData({

@@ -69,7 +69,8 @@ Page({
 
         // App.HttpService.getOrderList(params)
         this.order.queryAsync(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 order.items = [...order.items, ...data.data.items]

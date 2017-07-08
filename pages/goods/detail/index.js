@@ -29,7 +29,8 @@ Page({
     addCart(e) {
         const goods = this.data.goods.item._id
         App.HttpService.addCartByUser(goods)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.showToast(data.meta.message)
@@ -56,8 +57,9 @@ Page({
     getDetail(id) {
     	// App.HttpService.getDetail(id)
         this.goods.getAsync({id: id})
-        .then(data => {
-        	console.log(data)
+        .then(res => {
+            const data = res.data
+            console.log(data)
         	if (data.meta.code == 0) {
                 data.data.images.forEach(n => n.path = App.renderImage(n.path))
         		this.setData({

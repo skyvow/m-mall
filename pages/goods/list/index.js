@@ -13,7 +13,7 @@ Page({
     onLoad(option) {
         this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.setData({
-            type: option.type, 
+            type: option.type || '', 
             keyword: option.keyword && decodeURI(option.keyword), 
         })
         this.onPullDownRefresh()
@@ -54,7 +54,8 @@ Page({
 
         // App.HttpService.getGoods(params)
         this.goods.queryAsync(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 data.data.items.forEach(n => n.thumb_url = App.renderImage(n.images[0] && n.images[0].path))

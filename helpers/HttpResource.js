@@ -1,5 +1,5 @@
 import __config from '../etc/config'
-import WxResource from 'WxResource'
+import WxResource from '../assets/plugins/wx-resource/lib/index'
 
 class HttpResource {
 	constructor(url, paramDefaults, actions, options) {
@@ -16,9 +16,7 @@ class HttpResource {
 	 */
 	init() {
 		const resource = new WxResource(this.setUrl(this.url), this.paramDefaults, this.actions, this.options)
-		resource.setDefaults({
-			interceptors: this.setInterceptors()
-		})
+		resource.interceptors.use(this.setInterceptors())
 		return resource
 	}
 
@@ -33,41 +31,37 @@ class HttpResource {
 	 * 拦截器
 	 */
 	setInterceptors() {
-		return [{
-            request: (request) => {
+		return {
+            request(request) {
                 request.header = request.header || {}
-                request.requestTimestamp = new Date().getTime()
+                request.header['content-type'] = 'application/json'
                 if (request.url.indexOf('/api') !== -1 && wx.getStorageSync('token')) {
                     request.header.Authorization = 'Bearer ' + wx.getStorageSync('token')
                 }
-                wx.showToast({
+                wx.showLoading({
                     title: '加载中', 
-                    icon: 'loading', 
-                    duration: 10000, 
-                    mask: !0, 
                 })
                 return request
             },
-            requestError: (requestError) => {
-                wx.hideToast()
-                return requestError
+            requestError(requestError) {
+                wx.hideLoading()
+                return Promise.reject(requestError)
             },
-            response: (response) => {
-                response.responseTimestamp = new Date().getTime()
+            response(response) {
+                wx.hideLoading()
                 if(response.statusCode === 401) {
                     wx.removeStorageSync('token')
                     wx.redirectTo({
                         url: '/pages/login/index'
                     })
                 }
-                wx.hideToast()
                 return response
             },
-            responseError: (responseError) => {
-                wx.hideToast()
-                return responseError
+            responseError(responseError) {
+                wx.hideLoading()
+                return Promise.reject(responseError)
             },
-        }]
+        }
 	}
 }
 

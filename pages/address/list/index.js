@@ -39,7 +39,8 @@ Page({
     setDefalutAddress(e) {
         const id = e.currentTarget.dataset.id
         App.HttpService.setDefalutAddress(id)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 this.onPullDownRefresh()
@@ -52,7 +53,8 @@ Page({
 
         // App.HttpService.getAddressList(params)
         this.address.queryAsync(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 address.items = [...address.items, ...data.data.items]

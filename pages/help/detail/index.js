@@ -25,8 +25,9 @@ Page({
     },
     getDetail(id) {
         this.helps.getAsync({id: id})
-        .then(data => {
-        	console.log(data)
+        .then(res => {
+            const data = res.data
+            console.log(data)
         	if (data.meta.code == 0) {
         		this.setData({
                     'helps.item': data.data

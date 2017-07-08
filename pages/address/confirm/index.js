@@ -39,7 +39,8 @@ Page({
         })
 
         App.HttpService.getAddressList(params)
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
                 address.items = address.items.concat(data.data.items)

@@ -20,7 +20,8 @@ Page({
     	App.HttpService.search({
             keyword: this.data.inputVal
         })
-        .then(data => {
+        .then(res => {
+            const data = res.data
             console.log(data)
             if (data.meta.code == 0) {
             	this.setData({

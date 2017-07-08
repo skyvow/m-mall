@@ -68,7 +68,7 @@ Page({
 
 		App.getUserInfo()
 		.then(data => {
-			console.log(data)
+            console.log(data)
 			this.setData({
 				userInfo: data
 			})
@@ -108,7 +108,8 @@ Page({
     },
     signOut() {
     	App.HttpService.signOut()
-    	.then(data => {
+    	.then(res => {
+    		const data = res.data
     		console.log(data)
     		if (data.meta.code == 0) {
     			App.WxService.removeStorageSync('token')
