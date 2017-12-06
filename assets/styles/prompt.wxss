@@ -43,3 +43,7 @@
 .prompt-message .prompt-button-area .prompt-button:after {
     display: none;
 }
+
+.prompt-message{
+  margin-top: -300px;
+}

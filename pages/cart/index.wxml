@@ -19,9 +19,9 @@
                     <text class="text-orangered">¥ {{ item.goods.price }}</text>
                 </view>
                 <view class="weui-media-box__info">
-                    <view class="weui-media-box__info__meta">数量 x{{ item.total }}</view>
-                    <view class="weui-media-box__info__meta">单价 x{{ item.amount }}</view>
-                    <view class="weui-media-box__info__meta">总价 x{{ item.totalAmount }}</view>
+                    <view class="weui-media-box__info__meta">数量 x{{ item.goods.total }}</view>
+                    <view class="weui-media-box__info__meta">单价 x{{ item.goods.amount }}</view>
+                    <view class="weui-media-box__info__meta">总价 x{{ item.goods.totalAmount }}</view>
                 </view>
                 <view class="quantity-wrapper" wx:if="{{ canEdit }}">
                     <view class="customize-qua">

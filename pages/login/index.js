@@ -90,17 +90,20 @@ Page({
 	},
 	signIn(cb) {
 		if (App.WxService.getStorageSync('token')) return
-		App.HttpService.signIn({
-			username: 'admin', 
-			password: '123456', 
-		})
-		.then(res => {
-            const data = res.data
-            console.log(data)
-			if (data.meta.code == 0) {
-				App.WxService.setStorageSync('token', data.data.token)
-				cb()
-			}
-		})
+
+    console.log('点击了登录');
+    cb();
+		// App.HttpService.signIn({
+		// 	username: 'admin', 
+		// 	password: '123456', 
+		// })
+		// .then(res => {
+    //         const data = res.data
+    //         console.log(data)
+		// 	if (data.meta.code == 0) {
+		// 		App.WxService.setStorageSync('token', data.data.token)
+		// 		cb()
+		// 	}
+		// })
 	},
 })
