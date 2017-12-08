@@ -7,7 +7,7 @@
     <view class="weui-panel weui-panel_access" wx:if="{{ !!goods.paginate.total }}">
       <view class="weui-panel__bd">
         <!-- 商品列表 S -->
-        <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" bindtap="navigateTo" wx:for="{{ goods.items }}" wx:key="">
+        <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" bindtap="navigateTo" wx:for="{{ goods.items }}" wx:key="" data-id="{{ item.id }}">
 
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
             <image class="weui-media-box__thumb" src="../../assets/images/87.gif" />

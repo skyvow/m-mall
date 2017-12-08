@@ -20,10 +20,10 @@ Page({
       },
       goods: {
         items: [
-          { name: '含笑半步癫', price: 33 },
-          { name: '七星海棠', price: 50 },
-          { name: '伸腿瞪眼丸', price: 40 },
-          { name: '九芝堂浓缩六味地黄丸', price: 20 },
+          { id: 1, name: '含笑半步癫', price: 33 },
+          { id: 2, name: '七星海棠', price: 50 },
+          { id: 3, name: '伸腿瞪眼丸', price: 40 },
+          { id: 4, name: '九芝堂浓缩六味地黄丸', price: 20 },
         ],
         paginate: {
           total: 1
@@ -49,7 +49,7 @@ Page({
     })
   },
   navigateTo(e) {
-    console.log(e)
+    // 点击进入商品详情
     App.WxService.navigateTo('/pages/goods/detail/index', {
       id: e.currentTarget.dataset.id
     })

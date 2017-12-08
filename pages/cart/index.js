@@ -34,7 +34,7 @@ Page({
     this.getCarts(); //获取购物车信息
   },
   onShow() {
-    this.getCarts()
+    this.getCarts();
   },
   getCarts() {
     this.setData({
@@ -43,6 +43,7 @@ Page({
         [
           {
             goods: {
+              id: 1,
               thumb_url: '../../assets/images/87.gif',
               name: '含笑半步癫',
               price: 22,
@@ -53,6 +54,7 @@ Page({
           },
           {
             goods: {
+              id: 2,
               thumb_url: '../../assets/images/87.gif',
               name: '伸腿瞪眼丸',
               price: 23,
@@ -63,7 +65,6 @@ Page({
           },
         ],
       },
-
     });
 
   },
@@ -71,10 +72,10 @@ Page({
     this.getCarts()
   },
   navigateTo(e) {
-    console.log(e)
+    // console.log(e.currentTarget.dataset.id);
     App.WxService.navigateTo('/pages/goods/detail/index', {
       id: e.currentTarget.dataset.id
-    })
+    });
   },
   confirmOrder(e) {
     console.log(e)
@@ -108,14 +109,24 @@ Page({
     })
       .then(data => {
         if (data.confirm == 1) {
-          App.HttpService.clearCartByUser()
-            .then(res => {
-              const data = res.data
-              console.log(data)
-              if (data.meta.code == 0) {
-                this.getCarts()
-              }
-            })
+
+          console.log('发送清空购物车请求，回传成功后清空页面数据');
+          this.getCarts();
+          this.setData({
+            carts:{},
+            prompt: {
+              hidden: 0
+            }
+          });
+
+          // App.HttpService.clearCartByUser()
+          //   .then(res => {
+          //     const data = res.data
+          //     console.log(data)
+          //     if (data.meta.code == 0) {
+          //       this.getCarts()
+          //     }
+          //   });
         }
       })
   },

@@ -22,25 +22,26 @@ Page({
     this.getBanners(); //获取页面banners
 
     this.setData({
+
       navList: [
         { id: 1, name: '好吃的' },
         { id: 2, name: '好喝的' },
         { id: 3, name: '好玩的' }
       ],
+
       goods: {
         items: [
-          { name: '含笑半步癫', price: 33 },
-          { name: '七星海棠', price: 50 },
-          { name: '伸腿瞪眼丸', price: 40 },
-          { name: '九芝堂浓缩六味地黄丸', price: 20 },
+          { id: 1, name: '含笑半步癫', price: 33 },
+          { id: 2, name: '七星海棠', price: 50 },
+          { id: 3, name: '伸腿瞪眼丸', price: 40 },
+          { id: 4, name: '九芝堂浓缩六味地黄丸', price: 20 },
         ],
         paginate: {
           total: 1
         }
       },
-    });
 
-    console.log(this.data.navList);
+    });
   },
   initData() {
     const type = this.data.goods.params && this.data.goods.params.type || ''
@@ -59,13 +60,12 @@ Page({
     });
   },
   navigateTo(e) {
-    console.log(e)
     App.WxService.navigateTo('/pages/goods/detail/index', {
       id: e.currentTarget.dataset.id
-    })
+    });
   },
   search() {
-    App.WxService.navigateTo('/pages/search/index')
+    App.WxService.navigateTo('/pages/search/index');
   },
   getBanners() {
     this.setData({
@@ -102,14 +102,15 @@ Page({
       })
   },
   onPullDownRefresh() {
-    console.info('onPullDownRefresh')
-    this.initData()
-    this.getList()
+    console.info('执行的下拉刷新: onPullDownRefresh');
+    // this.initData()
+    // this.getList()
   },
   onReachBottom() {
-    console.info('onReachBottom')
-    if (!this.data.goods.paginate.hasNext) return
-    this.getList()
+    console.info('执行的上拉刷新: onReachBottom');
+
+    // if (!this.data.goods.paginate.hasNext) return
+    // this.getList()
   },
   onTapTag(e) {
     const type = e.currentTarget.dataset.type;
@@ -123,10 +124,10 @@ Page({
     this.setData({
       goods: {
         items: [
-          { name: '含笑半步癫' + type, price: 33 },
-          { name: '七星海棠' + type, price: 50 },
-          { name: '伸腿瞪眼丸' + type, price: 40 },
-          { name: '九芝堂浓缩六味地黄丸' + type, price: 20 },
+          { id: 1, name: '含笑半步癫' + type, price: 33 },
+          { id: 2, name: '七星海棠' + type, price: 50 },
+          { id: 3, name: '伸腿瞪眼丸' + type, price: 40 },
+          { id: 4, name: '九芝堂浓缩六味地黄丸' + type, price: 20 },
         ],
         paginate: {
           total: 1
