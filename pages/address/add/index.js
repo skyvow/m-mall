@@ -78,15 +78,16 @@ Page({
 			return false
 		}
 
+    console.log('确定提交地址信息');
 		// App.HttpService.postAddress(params)
-		this.address.saveAsync(params)
-		.then(res => {
-            const data = res.data
-            console.log(data)
-			if (data.meta.code == 0) {
-				this.showToast(data.meta.message)
-			}
-		})
+		// this.address.saveAsync(params)
+		// .then(res => {
+    //         const data = res.data
+    //         console.log(data)
+		// 	if (data.meta.code == 0) {
+		// 		this.showToast(data.meta.message)
+		// 	}
+		// })
 	},
 	showToast(message) {
 		App.WxService.showToast({

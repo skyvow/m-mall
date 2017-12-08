@@ -42,7 +42,7 @@
             <view class="weui-media-box__desc">支付方式：货到付款</view>
         </view>
         <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__desc">下单时间：{{ order.item.create_at }}</view>
+            <view class="weui-media-box__desc">下单时间：{{ order.item.created_at }}</view>
         </view>
     </view>
 </view>
