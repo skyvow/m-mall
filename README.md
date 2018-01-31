@@ -4,9 +4,6 @@
 
 - 基于微信小程序开发的一款移动端小商城
 - 基于 weui.wxss、es6 前端技术开发
-- 基于 [wx-extend](https://github.com/skyvow/wx-extend) 第三方扩展插件（发送请求、Promise API、表单验证）
-- 前台 [m-mall](https://github.com/skyvow/m-mall)
-- 后台 [m-mall-admin](https://github.com/skyvow/m-mall-admin)
 
 ## 目录结构：
 
@@ -69,8 +66,4 @@ m-mall/
 
 ##	贡献
 
-有任何意见或建议都欢迎提 issue
-
-##	License
-
-MIT
+有任何意见或建议都欢迎提

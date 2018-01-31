@@ -5,8 +5,11 @@ import HttpService from './helpers/HttpService'
 import __config from './etc/config'
 
 App({
+  globalData:{
+    userId:null,
+  },
 	onLaunch() {
-		console.log('onLaunch')
+		console.log('onLaunch');
 	},
 	onShow() {
 		console.log('onShow')

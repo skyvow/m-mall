@@ -11,10 +11,10 @@
             <view class="weui-form-preview__value">x{{ item.meta.total }} ¥ {{ item.meta.totalAmount }}</view>
         </view>
     </view>
-    <view class="weui-form-preview__ft">
+    <!-- <view class="weui-form-preview__ft">
         <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">联系商家</navigator>
         <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">再来一单</navigator>
-    </view>
+    </view> -->
 </view>
 
 <view class="weui-panel weui-panel_access">
@@ -38,11 +38,11 @@
         <view class="weui-media-box weui-media-box_text">
             <view class="weui-media-box__desc">订单号：{{ order.item._id }}</view>
         </view>
-        <view class="weui-media-box weui-media-box_text">
+        <!-- <view class="weui-media-box weui-media-box_text">
             <view class="weui-media-box__desc">支付方式：货到付款</view>
-        </view>
+        </view> -->
         <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__desc">下单时间：{{ order.item.create_at }}</view>
+            <view class="weui-media-box__desc">下单时间：{{ order.item.created_at }}</view>
         </view>
     </view>
 </view>
