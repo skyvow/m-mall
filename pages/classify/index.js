@@ -1,3 +1,5 @@
+import __config from '../../etc/config.js';
+
 const App = getApp()
 
 Page({
@@ -10,31 +12,35 @@ Page({
     },
   },
   onLoad() {
-
-    this.setData({
-      classify: {
-        items: [
-          { name: '数码类' },
-          { name: '情趣类' },
-        ],
-      },
-      goods: {
-        items: [
-          { id: 1, name: '含笑半步癫', price: 33 },
-          { id: 2, name: '七星海棠', price: 50 },
-          { id: 3, name: '伸腿瞪眼丸', price: 40 },
-          { id: 4, name: '九芝堂浓缩六味地黄丸', price: 20 },
-        ],
-        paginate: {
-          total: 1
-        }
-      },
-    });
+    //获取分类数据和商品数据
+    var classifyUrl = __config.basePath + "/classify/index";
+    this.getClassifyData(classifyUrl);
 
     // this.classify = App.HttpResource('/classify/:id', {id: '@id'});
     // this.goods = App.HttpResource('/goods/:id', {id: '@id'});
     // this.getSystemInfo();
     // this.onRefresh();
+  },
+  getClassifyData(classifyUrl) {
+    var self = this;
+    const requestTask = wx.request({
+      url: classifyUrl,
+      success: function (e) {
+        var result = e.data;
+
+        self.setData({
+          classify: {
+            items: result.data.class,
+          },
+          goods: {
+            items: result.data.goods.data,
+            paginate: {
+              total: 1
+            }
+          }
+        });
+      }
+    });
   },
   initData() {
     this.setData({
@@ -120,18 +126,25 @@ Page({
 
   },
   getGoods() {
-    this.setData({
-      goods: {
-        items: [
-          { name: '含笑半步癫', price: 33 },
-          { name: '七星海棠', price: 50 },
-          { name: '伸腿瞪眼丸', price: 40 },
-          { name: '九芝堂浓缩六味地黄丸', price: 20 },
-        ],
-        paginate: {
-          total: 1
-        }
-      },
+    var self = this;
+    var id = this.data.goods.params.type;
+
+    var getClassGoodsDataUrl = __config.basePath + "/classify/index/tab/goods";
+    const requestTask = wx.request({
+      url: getClassGoodsDataUrl,
+      data: { id: id },
+      success: function (e) {
+        var result = e.data;
+
+        self.setData({
+          goods: {
+            items: result.data.data,
+            paginate: {
+              total: 1
+            }
+          },
+        });
+      }
     });
   },
   onRefreshGoods() {

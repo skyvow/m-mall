@@ -16,19 +16,9 @@ Page({
         this.search()
     },
     search() {
-    	if (!this.data.inputVal) return
-    	App.HttpService.search({
-            keyword: this.data.inputVal
-        })
-        .then(res => {
-            const data = res.data
-            console.log(data)
-            if (data.meta.code == 0) {
-            	this.setData({
-            		items: data.data
-            	})
-            }
-        })
+      var serch = this.data.inputVal;
+      if (!serch) return
+      console.log(serch);
     },
     redirectTo(e) {
         console.log(e)

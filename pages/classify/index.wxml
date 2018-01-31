@@ -3,7 +3,7 @@
 <view class="classify">
   <view class="nav_left" bindscrolltolower="getMore" bindscrolltoupper="onRefresh">
     <scroll-view scroll-y="true" style="height: {{ deviceHeight + 'px' }}">
-      <view bindtap="changeTab" data-index="{{ index }}" data-id="{{ item._id }}" class="nav_left_item {{ activeIndex === index ? 'active' : '' }}" wx:for="{{ classify.items }}" wx:key="">
+      <view bindtap="changeTab" data-index="{{ index }}" data-id="{{ item.id }}" class="nav_left_item {{ activeIndex === index ? 'active' : '' }}" wx:for="{{ classify.items }}" wx:key="">
         {{ item.name }}
       </view>
     </scroll-view>

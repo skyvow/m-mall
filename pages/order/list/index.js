@@ -1,4 +1,6 @@
-const App = getApp()
+import __config from '../../../etc/config.js';
+
+const App = getApp();
 
 Page({
   data: {
@@ -17,14 +19,16 @@ Page({
       navList: [
         { name: '全部', id: 'all' },
         { name: '已提交', id: 'submitted' },
-        { name: '已确认', id: 'confirmed' },
+        { name: '已付款', id: 'confirmed' },
+        { name: '已发货', id: 'delivery' },
+        { name: '已收货', id: 'thegoods' },
         { name: '已完成', id: 'finished' },
         { name: '已取消', id: 'canceled' }
       ]
     });
 
     this.getList();
-    this.onPullDownRefresh();
+    // this.onPullDownRefresh();
   },
   initData() {
     const order = this.data.order
@@ -50,68 +54,48 @@ Page({
     })
   },
   getList() {
-    this.setData({
-      order: {
-        items: [
-          {
-            _id: 1,
-            totalAmount: 126,
-            items: [
-              {
-                goods: {
-                  name: '含笑半步癫'
-                },
-                meta: {
-                  total: 2,
-                  totalAmount: 66
-                }
-              },
-              {
-                goods: {
-                  name: '十香软筋散'
-                },
-                meta: {
-                  total: 3,
-                  totalAmount: 60
-                }
+    var self = this;
+    const order = this.data.order
+    const params = order && order.params
+    const type = params && params.type || 'all';
+
+    var getMyOrderUrl = __config.basePath + '/user/order/lists';
+    const requestTask = wx.request({
+      url: getMyOrderUrl,
+      method: "POST",
+      data: { u_id: wx.getStorageSync('session_user_id'), type: type },
+      success: function (e) {
+        var result = e.data;
+
+        if (result.data.length) {
+          self.setData({
+            order: {
+              items: result.data,
+              paginate: {
+                total: 1
               }
-            ],
-          },
-        ],
-        paginate: {
-          total: 1
+            },
+            prompt: {
+              hidden: 1
+            }
+          });
+        }else{
+          self.setData({
+            prompt: {
+              hidden: 0,
+              icon: '/assets/images/iconfont-order-default.png',
+              title: '您还没有相关的订单',
+              text: '可以去看看有哪些想买的',
+            },
+          });
         }
-      },
-      prompt: {
-        hidden: 1
       }
-
     });
-
-    // const order = this.data.order
-    // const params = order.params
-
-    // // App.HttpService.getOrderList(params)
-    // this.order.queryAsync(params)
-    // .then(res => {
-    //     const data = res.data
-    //     console.log(data)
-    //     if (data.meta.code == 0) {
-    //         order.items = [...order.items, ...data.data.items]
-    //         order.paginate = data.data.paginate
-    //         order.params.page = data.data.paginate.next
-    //         order.params.limit = data.data.paginate.perPage
-    //         this.setData({
-    //             order: order,
-    //             'prompt.hidden': order.items.length,
-    //         })
-    //     }
-    // })
   },
   onPullDownRefresh() {
     console.info('onPullDownRefresh')
-    // this.initData();
-    // this.getList();
+    this.initData();
+    this.getList();
   },
   onReachBottom() {
     console.info('onReachBottom')
@@ -127,7 +111,5 @@ Page({
       'order.params.type': type,
     });
     this.getList();
-
-    console.log(type);
   },
 })

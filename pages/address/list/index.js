@@ -1,4 +1,6 @@
-const App = getApp()
+import __config from '../../../etc/config.js';
+
+const App = getApp();
 
 Page({
   data: {
@@ -11,11 +13,8 @@ Page({
     },
   },
   onLoad() {
-    console.log('收货地址管理');
-    // this.address = App.HttpResource('/address/:id', {id: '@id'});
     this.onPullDownRefresh();
-
-    console.log(this.data.address);
+    // this.getList();
   },
   initData() {
     this.setData({
@@ -41,65 +40,57 @@ Page({
   },
   setDefalutAddress(e) {
     const id = e.currentTarget.dataset.id;
-    console.log('设置默认收货地址,设置的编号为: ' + id);
-    // App.HttpService.setDefalutAddress(id)
-    // .then(res => {
-    //     const data = res.data
-    //     console.log(data)
-    //     if (data.meta.code == 0) {
-    //         this.onPullDownRefresh()
-    //     }
-    // });
-  },
-  getList() {
-    const address = this.data.address;
-    const params = address.params;
+    var self = this;
 
-    console.log('获取收货地址列表数据');
-
-    this.setData({
-      address: {
-        items: [
-          {
-            _id: 1,
-            name: 'JackYang', gender: 'boy', tel: 13123456789,
-            address: '重庆市江北区江北城金融街华夏银行19楼',
-            is_def: true
-          },
-
-          {
-            _id: 2,
-            name: '沈璧君', gender: 'female', tel: 13123456789,
-            address: '重庆市江北区观音桥A座',
-            is_def: false
-          }
-        ],
-        paginate: { total: 1 },
-
+    var setDefaultAddressUrl = __config.basePath + "/user/address/set/default";
+    const requestTask = wx.request({
+      url: setDefaultAddressUrl,
+      method: "POST",
+      data: { u_id: wx.getStorageSync('session_user_id'), id: id },
+      success: function (e) {
+        var result = e.data;
+        if(result.status){
+          self.getList();
+        }
       }
     });
+  },
+  getList() {
+    var self = this;
 
-    // App.HttpService.getAddressList(params)
-    // this.address.queryAsync(params)
-    // .then(res => {
-    //     const data = res.data
-    //     console.log(data)
-    //     if (data.meta.code == 0) {
-    //         address.items = [...address.items, ...data.data.items]
-    //         address.paginate = data.data.paginate
-    //         address.params.page = data.data.paginate.next
-    //         address.params.limit = data.data.paginate.perPage
-    //         this.setData({
-    //             address: address,
-    //             'prompt.hidden': address.items.length,
-    //         })
-    //     }
-    // });
+    var getAddresUrl = __config.basePath + "/user/address";
+    const requestTask = wx.request({
+      url: getAddresUrl,
+      method: "GET",
+      data: { u_id: wx.getStorageSync('session_user_id') },
+      success: function (e) {
+        var result = e.data;
+        if (!result.data.length) {
+          self.setData({
+            prompt: {
+              hidden: 0,
+              icon: '/assets/images/iconfont-addr-empty.png',
+              title: '还没有收货地址呢',
+              text: '暂时没有相关数据',
+            }
+          });
+        } else {
+          self.setData({
+            prompt: {
+              hidden: !0,
+            },
+            address: {
+              items: result.data,
+              paginate: { total: 1 },
+            }
+          });
+        }
+      }
+    });
   },
   onPullDownRefresh() {
-    console.info('onPullDownRefresh')
-    this.initData()
-    this.getList()
+    this.initData();
+    this.getList();
   },
   onReachBottom() {
     console.info('onReachBottom')

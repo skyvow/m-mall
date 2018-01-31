@@ -1,4 +1,6 @@
-const App = getApp()
+import __config from '../../../etc/config.js';
+
+const App = getApp();
 
 Page({
   data: {
@@ -56,17 +58,67 @@ Page({
     });
   },
   onShow() {
+    //获取收货地址信息
     this.renderForm(this.data.id)
   },
   renderForm(id) {
+    var self = this;
+
+    var getAddressUrl = __config.basePath + "/user/address/info";
+    const requestTask = wx.request({
+      url: getAddressUrl,
+      method: "POST",
+      data: { id: id },
+      success: function (e) {
+        var result = e.data;
+        if (result.status) {
+
+          if (result.data.sex == 'female') {
+            var radio = [
+              { name: '先生', value: 'male' },
+              { name: '女士', value: 'female', checked: !0, },
+            ];
+          } else {
+            var radio = [
+              { name: '先生', value: 'male', checked: !0 },
+              { name: '女士', value: 'female' },
+            ];
+          }
+
+          self.setData({
+            form: {
+              name: result.data.name,
+              gender: result.data.sex,
+              tel: result.data.phone,
+              address: result.data.address,
+              is_def: result.data.default,
+            },
+            radio: radio
+          });
+        }
+      }
+    });
+
     this.setData({
       form: {
         name: 'Jack Yang',
-        gender: 'male',
+        gender: 'female',
         tel: '13123456789',
         address: '重庆市江北区江北城华夏银行19楼',
-        is_def: !1,
-      }
+        is_def: 1,
+      },
+      radio: [
+        {
+          name: '先生',
+          value: 'male',
+
+        },
+        {
+          name: '女士',
+          value: 'female',
+          checked: !0,
+        },
+      ],
     });
   },
   radioChange(e) {
@@ -106,13 +158,26 @@ Page({
         const data = res.data
         console.log(data)
         if (data.meta.code == 0) {
-          
+
         }
       })
   },
   delete() {
     const id = this.data.id;
-    console.log('执行删除操作');
+
+    var delAddressUrl = __config.basePath + "/user/address/delete";
+    const requestTask = wx.request({
+      url: delAddressUrl,
+      method: "POST",
+      data: { id: id, u_id: wx.getStorageSync('session_user_id') },
+      success: function (e) {
+        var result = e.data;
+        if(result.status){
+          App.WxService.navigateTo('/pages/address/list/index')
+        }
+      }
+    });
+
   },
   showToast(message) {
     App.WxService.showToast({

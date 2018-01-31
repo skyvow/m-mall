@@ -1,3 +1,5 @@
+import __config from '../../../etc/config.js';
+
 const App = getApp()
 
 Page({
@@ -6,85 +8,110 @@ Page({
     carts: {},
     address: {
       item: {},
-    }
+    },
+    address_id: null
   },
   onLoad(option) {
     console.log(option);
-    this.setData({
-      address_id: 3,//option.id, //地址编号
-      totalAmount: 126,
-      address: {
-        item: {
-          name: 'JackYang',
-          gender: 'boy',
-          tel: '13123456789',
-          address: '重庆市江北区金融城华夏银行19楼'
-        }
-      },
-      carts: {
-        totalAmount: 126,
-        items: [
-          {
-            goods: {
-              _id:1,
-              name: '含笑半步癫'
-            },
-            total: 2,
-            totalAmount: 66
-          },
-          {
-            goods: {
-              _id:2,
-              name: '十香软筋散'
-            },
-            total: 3,
-            totalAmount: 60
-          }
-        ],
-      }
-    });
+    var u_id = wx.getStorageSync('session_user_id');
 
-    // const carts = {
-    //   items: App.WxService.getStorageSync('confirmOrder'),
-    //   totalAmount: 0,
-    // }
-
-    // carts.items.forEach(n => carts.totalAmount += n.totalAmount)
-
-    // this.setData({
-    //   carts: carts
-    // })
-
-    // console.log(this.data.carts)
+    if (option.id) { //有改变订单收货地址
+      this.changeAddress(option.id);
+    } else {
+      //获取地址信息
+      this.getAddress(u_id);
+    }
   },
   onShow() {
-    const address_id = this.data.address_id
-    if (address_id) {
-      // this.getAddressDetail(address_id)
-    } else {
-      // this.getDefalutAddress()
-    }
+    //商品数据
+    this.getOrderGoodsData(wx.getStorageSync('session_user_id'));
+  },
+  getOrderGoodsData(u_id) {
+    var self = this;
+
+    var getOrderGoodsUrl = __config.basePath + '/order/confirm/goods';
+    const requestTask = wx.request({
+      url: getOrderGoodsUrl,
+      method: "POST",
+      data: { u_id: u_id },
+      success: function (e) {
+        var result = e.data;
+
+        if (result.status) {
+          self.setData({
+            carts: {
+              totalAmount: result.data.all_amount,
+              items: result.data.goods,
+            }
+          });
+        }
+      }
+    });
+  },
+  changeAddress(id) {
+    var self = this;
+
+    var getAddressUrl = __config.basePath + '/user/address/info';
+    const requestTask = wx.request({
+      url: getAddressUrl,
+      method: "POST",
+      data: { id: id },
+      success: function (e) {
+        var result = e.data;
+
+        if (result.status) {
+          self.setData({
+            address_id: result.data.id,//option.id, //地址编号
+            address: {
+              item: {
+                name: result.data.name,
+                gender: result.data.sex,
+                tel: result.data.phone,
+                address: result.data.address,
+                _id: result.data.id
+              }
+            },
+          });
+        } else {
+          self.showModal();
+        }
+      }
+    });
+  },
+  getAddress(u_id) {
+    var self = this;
+
+    var getDefaultAddressUrl = __config.basePath + '/order/confirm/default/address';
+    const requestTask = wx.request({
+      url: getDefaultAddressUrl,
+      data: { u_id: u_id },
+      success: function (e) {
+        var result = e.data;
+
+        if (result.status) {
+          self.setData({
+            address_id: result.data.id,//option.id, //地址编号
+            address: {
+              item: {
+                name: result.data.name,
+                gender: result.data.sex,
+                tel: result.data.phone,
+                address: result.data.address,
+                _id: result.data.id
+              }
+            },
+          });
+        } else {
+          self.showModal();
+        }
+      }
+    });
   },
   redirectTo(e) {
     console.log(e)
     App.WxService.redirectTo('/pages/address/confirm/index', {
       ret: this.data.address_id
     })
-  },
-  getDefalutAddress() {
-    App.HttpService.getDefalutAddress()
-      .then(res => {
-        const data = res.data
-        console.log(data)
-        if (data.meta.code == 0) {
-          this.setData({
-            address_id: data.data._id,
-            'address.item': data.data,
-          })
-        } else {
-          this.showModal()
-        }
-      })
   },
   showModal() {
     App.WxService.showModal({
@@ -123,11 +150,30 @@ Page({
         id: n.goods._id,
         total: n.total,
       })
-    })
+    });
+
     console.log(params);
     console.log('提交订单');
     console.log('订单提交成功之后进入支付操作，成功后再进入订单详情页面');
-    App.WxService.redirectTo('/pages/order/detail/index', {});
+
+
+    var addOrderUrl = __config.basePath + '/order/confirm';
+    var data = {
+      u_id: wx.getStorageSync('session_user_id'),
+      dbs: params
+    };
+    const requestTask = wx.request({
+      url: addOrderUrl,
+      method: "POST",
+      data: data,
+      success: function (e) {
+        var result = e.data;
+        console.log(result);
+        App.WxService.redirectTo('/pages/order/detail/index',
+          { pay_sn: result.data.pay_sn, amount: result.data.order_amount});
+      }
+    });
+    
   },
   clear() {
     App.HttpService.clearCartByUser()

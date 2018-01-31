@@ -10,7 +10,7 @@
         <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" bindtap="navigateTo" wx:for="{{ goods.items }}" wx:key="" data-id="{{ item.id }}">
 
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-            <image class="weui-media-box__thumb" src="../../assets/images/87.gif" />
+            <image class="weui-media-box__thumb" src="{{ item.image }}" />
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
             <view class="weui-media-box__title"> {{ item.name }} </view>

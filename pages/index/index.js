@@ -1,3 +1,5 @@
+import __config from '../../etc/config.js';
+
 const App = getApp()
 
 Page({
@@ -19,29 +21,14 @@ Page({
     // console.log(e.detail.current)
   },
   onLoad() {
-    this.getBanners(); //获取页面banners
+    //获取banner链接
+    var getBannerUrl = __config.basePath + '/index/banner';
+    //获取首页导航栏
+    var getNavUrl = __config.basePath + '/index/navigation';
 
-    this.setData({
+    this.getBanners(getBannerUrl); //获取页面banners
+    this.getNavigation(getNavUrl); //获取页面navigation
 
-      navList: [
-        { id: 1, name: '好吃的' },
-        { id: 2, name: '好喝的' },
-        { id: 3, name: '好玩的' }
-      ],
-
-      goods: {
-        items: [
-          { id: 1, name: '含笑半步癫', price: 33 },
-          { id: 2, name: '七星海棠', price: 50 },
-          { id: 3, name: '伸腿瞪眼丸', price: 40 },
-          { id: 4, name: '九芝堂浓缩六味地黄丸', price: 20 },
-        ],
-        paginate: {
-          total: 1
-        }
-      },
-
-    });
   },
   initData() {
     const type = this.data.goods.params && this.data.goods.params.type || ''
@@ -59,6 +46,7 @@ Page({
       goods: goods
     });
   },
+  // 跳转到商品详情页面
   navigateTo(e) {
     App.WxService.navigateTo('/pages/goods/detail/index', {
       id: e.currentTarget.dataset.id
@@ -67,14 +55,41 @@ Page({
   search() {
     App.WxService.navigateTo('/pages/search/index');
   },
-  getBanners() {
-    this.setData({
-      images: [
-        { path: '../../assets/images/banner1.jpeg' },
-        { path: '../../assets/images/banner2.jpg' },
-      ]
+  getBanners(getBannerUrl) {
+    var self = this;
+    const requestTask = wx.request({
+      url: getBannerUrl,
+      success: function (e) {
+        var result = e.data;
+        if (result.status){
+          self.setData({
+            images: result.data
+          });
+        }else{
+          console.log('暂时没有banner图片');
+        }
+      }
     });
-
+  },
+  getNavigation(getNavUrl){
+    var self = this;
+    const requestTask = wx.request({
+      url: getNavUrl,
+      success: function (e) {
+        var result = e.data;
+        if (result.status) {
+          self.setData({
+            navList: result.data.nav,
+            goods:{
+              items: result.data.goods,
+              paginate: {total: 1}
+            },
+          });
+        } else {
+          console.log('暂时没有navigation图片');
+        }
+      }
+    });
   },
   getClassify() {
     const activeIndex = this.data.activeIndex;
@@ -121,18 +136,24 @@ Page({
     });
 
     // 查询相应类型的数据  然后修改goods 的数据
-    this.setData({
-      goods: {
-        items: [
-          { id: 1, name: '含笑半步癫' + type, price: 33 },
-          { id: 2, name: '七星海棠' + type, price: 50 },
-          { id: 3, name: '伸腿瞪眼丸' + type, price: 40 },
-          { id: 4, name: '九芝堂浓缩六味地黄丸' + type, price: 20 },
-        ],
-        paginate: {
-          total: 1
+    var url = __config.basePath + '/index/navigation/goods?id=' + type;
+    
+    var self = this;
+    const requestTask = wx.request({
+      url: url,
+      success: function (e) {
+        var result = e.data;
+        if (result.status) {
+          self.setData({
+            goods: {
+              items: result.data,
+              paginate: { total: 1 }
+            }
+          });
+        } else {
+          console.log('暂时没有navigation图片');
         }
-      },
+      }
     });
   },
 })

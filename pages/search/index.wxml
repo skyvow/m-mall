@@ -11,7 +11,8 @@
 </view>
 <view class="weui-cells searchbar-result" wx:if="{{ !!inputVal && !!items.length }}">
     <view class="weui-cell" hover-class="weui-cell_active" wx:for="{{ items }}" wx:key="" bindtap="redirectTo" data-keyword="{{ item._id }}">
-        <view class="weui-cell__bd">{{ item._id }}</view>
-        <view class="weui-cell__ft">约 {{ item.num }} 个结果</view>
+         <view class="weui-cell__bd">{{ item._id }}</view> 
+         <view class="weui-cell__ft">约 {{ item.num }} 个结果 
+</view>
     </view>
 </view>
