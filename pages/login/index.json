@@ -1,5 +1,5 @@
 {
 	"navigationBarBackgroundColor": "#000000",
     "navigationBarTitleText": "微信登录",
-    "disableScroll": "true"
+    "disableScroll": true
 }
